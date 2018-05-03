@@ -8,6 +8,7 @@
   font-style: normal;
 }
 
+
 body {
 	font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue",	Helvetica, "BBAlpha Sans", sans-serif;
 }
@@ -28,14 +29,77 @@ a {
 	background-color: #ecf0f1;
 	border-bottom: solid 1px #bbb;
 }
+.logo-div{
+	height: 23%;
+	margin-top: 48px;
+}
+.title-div{
+	position: relative;
+    text-align: center;
+    color: tomato;
+}
+.photo{
+    height: 80px;
+    width: 80px;
+    background-color: steelblue;
+    border-radius: 60px;
+    margin-top: 29px;
+    margin-left: 6%;
+    position: absolute;
+}
+.container-profile-div{
+	position: relative;
+    height: 30%;
+}
+.addsign{
+    content: url(images/signoMas.png);
+    margin-right: 135px;
+    float: right;
+    margin-top: 65px;
+    height: 13px;
+    width: 14px;
+    transform: scale(1.3);
+}
+.addphoto{
+    color: navy;
+    width: 141px;
+    text-align: right;
+    padding-right: 4px;
+    position: absolute;
+    margin-top: 59px;
+    right: 15px;
+    height: 25px;
+    border: solid;
+    padding-top: 2px;
+}
 .mui-page-logo {
-	width: 40px;
-	height: 40px;
+    width: 79px;
+    height: 80px;
 	margin: auto;
 	background-position: center;
-	background-image: url(images/logo-40.png);
+	background-image: url(images/Logo.png);
 	background-repeat: no-repeat;
 }
+.form-div{
+	margin-top: 54px;
+}
+.field-form{
+	margin: auto;
+    display: block;
+    margin-top:10px;
+    width: 60%;
+}
+.button{
+	margin: auto;
+    display: block;
+    margin-top:10px;
+    width: 60%;
+    margin-top: 25px;
+    border-radius: 3px;
+    border: solid;
+    border-color: lightslategrey;
+}
+
 .mui-page-title {
 	width: 100%;
     text-align: center;
