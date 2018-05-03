@@ -32,19 +32,39 @@
 			<!-- ViewPort por defecto. No lo elimines. Hará tu vida más simple y feliz. -->
 			<div id="mui-viewport" class="mui-viewport">
 			
-				<div id='home-page' class="mui-page">
-					<div class="mui-page-header">
-						<div class="mui-page-logo"></div>
-						<a class="mui-headmenu" href="#"></a>
-					</div>
-					<div class="mui-page-body mui-scrollable" id="home-body">
-						<div> <!-- important for scroll! -->
-							<div id='delete-me' style="margin: 50px; text-align: center; text-decoration: underline"> <!-- inline style only for demo -->
-								Touch to go to page 2 (demo to show page change)
-							</div>
+				<div id='profile-page' class="mui-page">
+					<div class="container-profile-div">
+						<div class="addsign"></div>
+						<div class= "photo">
 						</div>
+						<div class= "addphoto">
+							Agregar foto
+						</div>
+
+					</div>
+
+					<div class = "form-div">
+						<input type="text" size="20" maxlength="50" placeholder="Nombre" name="name" class="field-form">
+						<input type="text" size="20" maxlength="50" placeholder="Apellido" name="lastname" class="field-form">
+						<input type="password" size="20" maxlength="50" placeholder="Nueva contraseña" name="password" class="field-form">
+						<input type="button" value="Enviar" class="button">
+					</div>
+				</div>			
+			
+				<div id='registry-page' class="mui-page">
+					<div class= "logo-div">
+						<div class="mui-page-logo"></div>
+					</div>
+					<div class= "title-div">
+						Registrarme
+					</div>
+					<div class = "form-div">
+						<input type="text" size="20" maxlength="50" placeholder="Mail" name="mail" class="field-form">
+						<input type="password" size="20" maxlength="50" placeholder="Contraseña" name="password" class="field-form">
+						<input type="button" value="Enviar" class="button">
 					</div>
 				</div>
+				
 				
 				<div id='template-page' class="mui-page">
 					<div class="mui-page-header">
@@ -66,17 +86,6 @@
 				
 			</div>	
 			
-			<!-- Optional.Toolbar out of mui-viewport to be omnipresent. Remove if not needed. -->
-			<!-- Opcional. Barra de herramientas fuera de mui-viewport para ser omnipresente. Elimínalo si no lo necesitas. -->
-	        <div class="mui-tabbar" id="footer">
-		        	<ul class="mui-tabbar-list">
-		        		<li class="mui-tabbar-button"><a href="#" id="tabbar-button1" >Tab1</a></li>
-		    			<li class="mui-tabbar-button"><a href="#" id="tabbar-button2" >Tab2</a></li>
-		    			<li class="mui-tabbar-button"><a href='#' id="tabbar-button3" >Tab3</a></li>
-		    			<li class="mui-tabbar-button"><a href="#" id="tabbar-button4" >Tab4</a></li>
-		    			<li class="mui-tabbar-button"><a href="#" id="tabbar-button5" >Tab5</a></li>
-		        	</ul>
-	        </div>
 		</div>	
 		
 		<!-- mui-screen level panel -->
