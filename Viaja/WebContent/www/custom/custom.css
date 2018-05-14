@@ -1,5 +1,19 @@
 @CHARSET "UTF-8";
 
+/* CONVENCIONES --------------------------------------------------------------------*/
+/*
+	- Ordenamos estilos por página.
+	- Dentro de cada página, ordenamos por aparición en el html.
+	- En caso de elementos dentro de otros, primero el principal, luego los contenidos. 
+	- Dentro de cada estilo seguimos el siguiente orden:
+		+ position (relative, absolute; top, bottom...)
+		+ height y width
+		+ margins, paddings, display, border
+		+ propiedades de texto (fuente, alineación y color)
+		+ propiedades de background
+*/
+
+
 @font-face {
 	font-family: 'FontAwesome';
 	src: url('fonts/fontawesome-webfont.eot?v=4.4.0');
@@ -24,44 +38,174 @@ a {
 	color: inherit;
 	display: block;
 }
-/* Add tabbar need bottom space  ------------------------------------------------------------------ */
-/* Agregar tabbar neceista espacio abajo */
+
 #mui-viewport {
 	top: 0px;
-	bottom: 48px;
-}
-/*Page sample  ------------------------------------------------------------------ */
-.mui-page-header {
-	background-color: #ecf0f1;
-	border-bottom: solid 1px #bbb;
+	bottom: 0px;
 }
 
-.logo-div {
+.mui-page-title {
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	padding-top: 12px;
+}
+
+.mui-page {
+	margin-top: 0px;
+}
+
+.mui-page-body {	
+}
+
+.mui-page-body-content {
+	padding: 10px;
+}
+
+[placeholder]:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.logo-ppal{
+	background-image: url(images/transparentLogoPpal2.png);
+	background-repeat: no-repeat;
+}
+
+/* Sign-in Page --------------------------------------------------------------- */
+#sign-in-page .logo-ppal-header {
+	position: absolute;
 	height: 23%;
+	width: 100%;
 	margin-top: 48px;
 }
 
-.title-div {
+#sign-in-page .logo-ppal-header .logo-ppal {
+	height: 100%;
+	width: 60%;
+	margin: auto;
+	background-position: center;
+	background-size:100%;
+}
+
+#sign-in-page .title-div {
 	position: relative;
+	top: 32%;
+	width: 100%;
+	font-family: 'AR CENA';
+	font-size: 32px;
 	text-align: center;
 	color: tomato;
 }
 
-.photo {
-	height: 80px;
-	width: 80px;
-	background-color: steelblue;
-	border-radius: 60px;
-	margin-top: 29px;
-	margin-left: 6%;
-	position: absolute;
+#sign-in-page .form-div {
+	position: relative;
+	top: 32%;
+	height: 30%;
+	width: 80%;
+	margin: 10%;
+	margin-top: 4%;
+	padding: 5%;
 }
 
-.container-profile-div {
+.form-div label {
+	font-size: 14px;
+	font-weight: bold;
+	/*color: #66a3ff;*/
+}
+
+.field-form {
+	width: 100%;
+	display: block;
+	margin-top: 1%;
+	margin-bottom: 10%;
+	border: none;
+	border-bottom:solid tomato 1px;
+}
+
+.field-form:focus {
+	outline: none;
+}
+
+.form-btn {
+	height: 25%;
+	width: 100%;
+	margin-top: 10px;
+	margin-top: 25px;
+	display: block;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	background-color: tomato;
+}
+
+.form-btn:focus {
+	outline: none;
+	background-color: #66a3ff;
+}
+
+/* Profile Page --------------------------------------------------------------- */
+#profile-page .logo-ppal-header {
+	position: absolute;
+	top: 10px;
+	height: 10%;
+	width: 100%;
+}
+
+#profile-page .logo-ppal-header .logo-ppal {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    background-position: right;
+    background-size: 30%;
+    background-repeat: no-repeat;
+}
+
+#profile-page .profile-pic-div {
+	position: relative;
+	top: 5%;
+	height: 30%;
+	margin-bottom: 10%;
+	border-radius: 150px;
+}
+
+#profile-page .profile-pic-div .profile-pic {
+    position: relative;
+    height: 100%;
+    width: 50%;
+    margin: auto;
+    border-radius: 150px;
+    background-image: url(images/profileIcon.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#profile-pic-overlay {
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  padding: 20px;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); /* Black see-through*/ 
+  opacity:0;
+  transition: .5s ease;
+}
+
+#profile-page .profile-pic-div .profile-pic:hover #profile-pic-overlay{
+  opacity: 1;
+}
+
+#profile-page .form-div {
 	position: relative;
 	height: 30%;
+	width: 80%;
+	margin: 10%;
+	margin-top: 4%;
+	padding: 5%;
 }
 
+/*
 .addsign {
 	content: url(images/signoMas.png);
 	margin-right: 135px;
@@ -83,54 +227,9 @@ a {
 	height: 25px;
 	border: solid;
 	padding-top: 2px;
-}
+}*/
 
-.mui-page-logo {
-	width: 79px;
-	height: 80px;
-	margin: auto;
-	background-position: center;
-	background-image: url(images/Logo.png);
-	background-repeat: no-repeat;
-}
-
-.form-div {
-	margin-top: 54px;
-}
-
-.field-form {
-	margin: auto;
-	display: block;
-	margin-top: 10px;
-	width: 60%;
-}
-
-.button {
-	margin: auto;
-	display: block;
-	margin-top: 10px;
-	width: 60%;
-	margin-top: 25px;
-	border-radius: 3px;
-	border: solid;
-	border-color: lightslategrey;
-}
-
-.mui-page-title {
-	width: 100%;
-	text-align: center;
-	font-size: 20px;
-	padding-top: 12px;
-}
-
-.mui-page-body {
-	
-}
-
-.mui-page-body-content {
-	padding: 10px;
-}
-
+/* Home Page --------------------------------------------------------------- */
 
 #destination{
 	width: 100%;
@@ -169,8 +268,8 @@ a {
 /* GoBack button ------------------------------------------------------------------ */
 .mui-backarrow {
 	position: absolute;
-	top: 4px;
-	left: 5px;
+	top: 0px;
+	left: 20px;
 	width: 40px;
 	height: 37px;
 }
@@ -179,7 +278,7 @@ a {
 	font-family: FontAwesome;
 	content: '\f104';
 	font-size: 35px;
-	color: #1A7EFA;
+	color: tomato;
 }
 /* Menu button ------------------------------------------------------------------ */
 .mui-headmenu {

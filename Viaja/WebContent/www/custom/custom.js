@@ -42,6 +42,14 @@ function installEvents() {
 			}
 		},
 		{
+			id: '#sign-in-btn',
+			ev: 'click',	
+			fn: () => {
+				mui.viewport.showPage("profile-page", "DEF");
+				return false;
+			}
+		},
+		{
 			id: '.mui-headmenu',
 			ev: 'click',	//If not, it assumes click
 			fn: () => {
