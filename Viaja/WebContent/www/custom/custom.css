@@ -91,7 +91,8 @@ a {
 	position: relative;
 	top: 32%;
 	width: 100%;
-	font-family: 'AR CENA';
+	font-family: 'ARCENA';
+	src: url('fonts/ARCENA.TTF');
 	font-size: 32px;
 	text-align: center;
 	color: tomato;
