@@ -3,11 +3,9 @@
 	xmlns:gap='http://phonegap.com/ns/1.0' id="your.app.id" versionCode="1"
 	version="0.0.1">
 
-	<name>MobileUI</name>
+	<name>ViajáConmigo</name>
 
-	<description>
-		MobileUI tabbar-menu App template
-	</description>
+	<description>Compartí tus viajes</description>
 
 	<author href="http://www.mobileui.org"
 		email="gustavo.gretter@mobileui.org">
