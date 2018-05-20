@@ -49,6 +49,7 @@ a {
 #mui-viewport {
 	top: 0px;
 	bottom: 0px;
+	touch-action: manipulation;
 }
 
 .mui-page-title {
@@ -78,15 +79,21 @@ a {
 	background-repeat: no-repeat;
 }
 
-/* Sign-in Page --------------------------------------------------------------- */
-#sign-in-page .logo-ppal-header {
+.form-alert-msg {
+	visibility: hidden;
+	font-size: 10px;
+	color: red;
+}
+
+/* sign-up Page --------------------------------------------------------------- */
+#sign-up-page .logo-ppal-header {
 	position: absolute;
 	height: 23%;
 	width: 100%;
 	margin-top: 48px;
 }
 
-#sign-in-page .logo-ppal-header .logo-ppal {
+#sign-up-page .logo-ppal-header .logo-ppal {
 	height: 100%;
 	width: 60%;
 	margin: auto;
@@ -94,7 +101,7 @@ a {
 	background-size:100%;
 }
 
-#sign-in-page .title-div {
+#sign-up-page .title-div {
 	position: relative;
 	top: 32%;
 	width: 100%;
@@ -104,14 +111,19 @@ a {
 	color: tomato;
 }
 
-#sign-in-page .form-div {
+#sign-up-page .form-div {
 	position: relative;
 	top: 32%;
-	height: 30%;
+	height: 100%;
 	width: 80%;
 	margin: 10%;
 	margin-top: 4%;
 	padding: 5%;
+}
+
+#passwordDiv {
+	height: 25%;
+	display: none;
 }
 
 .form-div label {
@@ -123,8 +135,8 @@ a {
 .field-form {
 	width: 100%;
 	display: block;
-	margin-top: 1%;
-	margin-bottom: 10%;
+	margin-top: 5%;
+	margin-bottom: 5%;
 	border: none;
 	border-bottom:solid tomato 1px;
 }
@@ -134,10 +146,9 @@ a {
 }
 
 .form-btn {
-	height: 25%;
+	height: 30px;
 	width: 100%;
-	margin-top: 10px;
-	margin-top: 25px;
+	margin-top: 5%;
 	display: block;
 	border: none;
 	border-radius: 3px;
@@ -145,10 +156,10 @@ a {
 	background-color: tomato;
 }
 
-.form-btn:focus {
+/*.form-btn:focus {
 	outline: none;
 	background-color: #66a3ff;
-}
+}*/
 
 /* Profile Page --------------------------------------------------------------- */
 #profile-page .logo-ppal-header {
@@ -205,7 +216,7 @@ a {
 
 #profile-page .form-div {
 	position: relative;
-	height: 30%;
+	height: 35%;
 	width: 80%;
 	margin: 10%;
 	margin-top: 4%;
@@ -384,4 +395,20 @@ a {
 
 .mui-panel-header {
 	display: none;
+}
+
+.input-invalid+span:after {
+  position: absolute; 
+  top: 50px;
+  right: 20px;
+  content: '✖';
+  color: red;
+}
+
+.input-valid+span:after {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  content: '✔';
+  color: green;
 }

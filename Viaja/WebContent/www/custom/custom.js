@@ -42,10 +42,104 @@ function installEvents() {
 			}
 		},
 		{
-			id: '#sign-in-btn',
+			id: '#sign-up-send-mail-btn',
+			ev: 'click',	
+			fn: () => {	
+				var email = $("#sign-up-mail").val();
+				if(email.split("@")[1] != "correo.um.edu.uy" && email.split("@")[1] != "um.edu.uy" ) {
+					$("#sign-up-alert").html("La dirección no pertenece al dominio UM.");
+					document.getElementById("sign-up-alert").style.visibility = "visible";
+				} else {
+					document.getElementById("sign-up-alert").style.visibility = "hidden";
+					$.ajax({ 
+			    		type: 'GET', 
+			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/mailExists?email='+email,
+			    		success: function (result) {
+			    			if(result === 'si'){
+			    				$("#sign-up-alert").html("La dirección no está disponible.");
+			    				document.getElementById("sign-up-alert").style.visibility = "visible";
+			    				$("#sign-up-mail").addClass("input-invalid");
+			    			}
+			    			else if (result === 'no') {
+			    				$("#sign-up-mail").removeClass("input-invalid");
+			    				$("#sign-up-mail").addClass("input-valid");
+			    				document.getElementById("sign-up-alert").style.visibility = "hidden";
+			    				$.ajax({ 
+			    		    		type: 'GET', 
+			    		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/createUser?email='+email,
+			    		    		success: function () {
+			    		    			document.getElementById("sign-up-send-mail-btn").style.display = "none";
+			    		    			$("#passwordDiv").animate({
+			    		    	            height: 'toggle',
+			    		    	        });		
+			    		    		}
+			    		    	});
+			    			}
+			    		}
+			    	});
+				}
+			}
+		},
+		{
+			id: '#sign-up-btn',
 			ev: 'click',	
 			fn: () => {
-				mui.viewport.showPage("profile-page", "DEF");
+				var email = $("#sign-up-mail").val();
+				var password = $("#sign-up-password").val();
+				$.ajax({ 
+		    		type: 'GET', 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/userExists?email='+email+'&password='+password,
+		    		success: function (result) {
+		    			if(result === 'si'){
+		    				document.getElementById("sign-up-alert").style.visibility = "hidden";
+		    				mui.viewport.showPage("profile-page", "DEF");
+		    			}
+		    			else if (result === 'no') {
+		    				$("#sign-up-alert").html("El usuario y la contraseña no coinciden.");
+		    				document.getElementById("sign-up-alert").style.visibility = "visible";
+		    				$("#password").value = null;
+		    			}
+		    		}
+		    	});
+				return false;
+			}
+		},
+		{
+			id: '#profile-btn',
+			ev: 'click',	
+			fn: () => {	
+				var email = $("#sign-up-mail").val();
+				var name = $("#profile-name").val();
+				var lastname = $("#profile-lastname").val();
+				var password = $("#profile-password").val();
+				var confPassword = $("#profile-confirm-password").val();
+				if(name == null || lastname == null || password == null || confPassword == null) {
+					$("#profile-alert").html("Todos los campos son obligatorios.");
+    				document.getElementById("profile-alert").style.visibility = "visible";
+				}
+				else if(password.length < 8 || confPassword.length < 8){
+					$("#profile-alert").html("Contraseña menor a 8 caracteres.");
+    				document.getElementById("profile-alert").style.visibility = "visible";
+				}
+				else if(password.length > 32 || confPassword.length > 32){
+					$("#profile-alert").html("Contraseña mayor a 32 caracteres.");
+    				document.getElementById("profile-alert").style.visibility = "visible";
+				}
+				else if(password != confPassword){
+					$("#profile-alert").html("Las contraseñas no coinciden.");
+    				document.getElementById("profile-alert").style.visibility = "visible";
+				}
+				else {
+					document.getElementById("profile-alert").style.visibility = "hidden";
+					var hash = md5(password);
+					$.ajax({ 
+			    		type: 'GET', 
+			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/editUser?email='+email+'&password='+hash+'&name='+name+'&lastname='+lastname,
+			    		success: function () {
+			    			mui.viewport.showPage("home-page", "DEF");
+			    		}
+			    	});
+				}
 				return false;
 			}
 		},
