@@ -151,7 +151,7 @@ a {
 	margin-top: 5%;
 	display: block;
 	border: none;
-	border-radius: 3px;
+	/*border-radius: 3px;*/
 	color: white;
 	background-color: tomato;
 }
@@ -183,7 +183,7 @@ a {
 	top: 5%; 
 	height: 30%;
 	margin-bottom: 10%;
-	border-radius: 150px;
+	: 150px;
 }
 
 #profile-page .profile-pic-div .profile-pic {
