@@ -53,7 +53,7 @@ function installEvents() {
 					document.getElementById("sign-up-alert").style.visibility = "hidden";
 					$.ajax({ 
 			    		type: 'GET', 
-			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/mailExists?email='+email,
+			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/validMail?email='+email,
 			    		success: function (result) {
 			    			if(result === 'si'){
 			    				$("#sign-up-alert").html("La dirección no está disponible.");
