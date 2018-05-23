@@ -59,7 +59,7 @@ function installEvents() {
 			    				$("#sign-up-alert").html("La dirección no está disponible.");
 			    				document.getElementById("sign-up-alert").style.visibility = "visible";
 			    				$("#sign-up-mail").addClass("input-invalid");
-			    			}
+			    			} 
 			    			else if (result === 'no') {
 			    				$("#sign-up-mail").removeClass("input-invalid");
 			    				$("#sign-up-mail").addClass("input-valid");
