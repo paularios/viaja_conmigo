@@ -63,7 +63,7 @@ a {
 	margin-top: 0px;
 }
 
-.mui-page-body {	
+.mui-page-body {
 }
 
 .mui-page-body-content {
@@ -78,6 +78,11 @@ a {
 	background-image: url(images/transparentLogoPpal2.png);
 	background-repeat: no-repeat;
 }
+
+.logo-mmal{
+	background-image: url(images/transparentLogoMmal2.png);
+	background-repeat: no-repeat;
+}
  
 .form-alert-msg {
 	visibility: hidden;
@@ -86,6 +91,10 @@ a {
 }
 
 /* sign-up Page --------------------------------------------------------------- */
+#sign-up-page .mui-scrollable {
+	margin-top: 45%;
+}
+
 #sign-up-page .logo-ppal-header {
 	position: absolute;
 	height: 23%;
@@ -148,18 +157,60 @@ a {
 .form-btn {
 	height: 30px;
 	width: 100%;
-	margin-top: 5%;
+	/*margin-top: 5%;*/
 	display: block;
 	border: none;
 	/*border-radius: 3px;*/
 	color: white;
 	background-color: tomato;
+	outline: none;
 }
 
 /*.form-btn:focus {
 	outline: none;
 	background-color: #66a3ff;
 }*/
+
+
+/* Log In Page ---------------------------------------------------------------- */
+#log-in-page .mui-scrollable {
+	margin-top: 45%;
+}
+
+#log-in-page .logo-ppal-header {
+	position: absolute;
+	height: 23%;
+	width: 100%;
+	margin-top: 48px;
+}
+
+#log-in-page .logo-ppal-header .logo-ppal {
+	height: 100%;
+	width: 60%;
+	margin: auto;
+	background-position: center;
+	background-size:100%;
+}
+
+#log-in-page .title-div {
+	position: relative;
+	top: 32%;
+	width: 100%;
+	font-family: 'ARCENA';
+	font-size: 32px;
+	text-align: center;
+	color: tomato;
+}
+
+#log-in-page .form-div {
+	position: relative;
+	top: 32%;
+	height: 100%;
+	width: 80%;
+	margin: 10%;
+	margin-top: 4%;
+	padding: 5%;
+}
 
 /* Profile Page --------------------------------------------------------------- */
 #profile-page .logo-ppal-header {
@@ -181,15 +232,14 @@ a {
 #profile-page .profile-pic-div {
 	position: relative;
 	top: 5%; 
-	height: 30%;
+	height: 25%;
 	margin-bottom: 10%;
-	: 150px;
 }
 
 #profile-page .profile-pic-div .profile-pic {
     position: relative;
     height: 100%;
-    width: 50%;
+    width: 40%;
     margin: auto;
     border-radius: 150px;
     background-image: url(images/profileIcon.png);
@@ -210,76 +260,151 @@ a {
   transition: .5s ease;
 }
 
+#profile-pic-overlay:before {
+	font-family: 'FontAwesome';
+	content: '\f030';
+	font-size: 12px;
+}
+
 #profile-page .profile-pic-div .profile-pic:hover #profile-pic-overlay{
   opacity: 1;
 }
 
 #profile-page .form-div {
 	position: relative;
-	height: 35%;
+	height: 65%;
 	width: 80%;
 	margin: 10%;
 	margin-top: 4%;
 	padding: 5%;
 }
-/*
-.addsign {
-	content: url(images/signoMas.png);
-	margin-right: 135px;
-	float: right;
-	margin-top: 65px;
-	height: 13px;
-	width: 14px;
-	transform: scale(1.3);
-}
-
-.addphoto {
-	color: navy;
-	width: 141px;
-	text-align: right;
-	padding-right: 4px;
-	position: absolute;
-	margin-top: 59px;
-	right: 15px;
-	height: 25px;
-	border: solid;
-	padding-top: 2px;
-}*/
 
 /* Home Page --------------------------------------------------------------- */
-
-#destination{
-	width: 100%;
-  height: 25%;
+#home-page .mui-page-body {
+	top: 0px !important;
 }
 
-#destination-box{
-	text-align: left;
+#map {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	background-color: blue;
+}
+
+#home-page .logo-mmal-header {
+	position: absolute;
+	bottom: 10%;
+	height: 10%;
+	width: 100%;
+}
+
+#home-page .logo-mmal-header .logo-mmal {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    background-color: none;
+    background-position: right;
+    background-size: 20%;
+    background-repeat: no-repeat;
+}
+
+#destination-div{
+	position: absolute;
+	height: 8%;
+    width: 90%;
+    margin-top: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+    display: block;
+    text-align: center;
     font-style: inherit;
-    margin-left: 63px;
-    margin-top: 60px;
     font-size: 18px;
+    background-color: white;
+}
+
+#destination{
+	height: 100%;
+	width: 60%;
+  	padding: 2%;
+  	border: none;
+}
+
+#destination:focus{
+	outline: none;
+}
+
+#home-page-btn {
+	position: absolute;
+	width: 90%;
+	top: 18%;
+	margin-left: 5%;
+	margin-right: 5%;
 }
 
 #buttons-board{
-	height: 50%;
-	width: 27%;
+	position: absolute;
+	top: 30%;
+	left: 3%;
+	height: 35%;
+	width: 20%;
 	display: inline-block;
-	margin-bottom: -1%; 
 }
 
 .circle-button-div{
-  height: 33.3%;
+  	height: 33.3%;
+  	margin-bottom: 5%;
 }
 
-.circle-button{
+.circle-button {
   height: 85%;  
   width: 85%;
   margin: 7.5%; 
+  padding:5%;
   border-radius: 100%;
   border: none;
   font-size: 28px;
   text-align: center;
+  background-color: tomato;
+}
+
+.circle-button:focus {
+	outline: none;
+	background-color: #66a3ff;
+}
+
+#home-page-profile-btn {
+	background-image: url("images/profile-icon.png");
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#home-page-history-btn {
+	background-image: url("images/history-icon.png");
+	background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#home-page-notifications-btn {
+	background-image: url("images/notifications-icon.png");
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Panels ------------------------------------------------------------------------- */
+#ride-panel {
+	position: absolute;
+    height: 50%;
+    width: 90%;
+    top: 25%;
+    margin-left: 5%;
+    margin-right: 5%;
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	visibility: hidden;
 }
 
 /* GoBack button ------------------------------------------------------------------ */
@@ -399,7 +524,7 @@ a {
 
 .input-invalid+span:after {
   position: absolute; 
-  top: 50px;
+  top: 60px;
   right: 20px;
   content: '✖';
   color: red;

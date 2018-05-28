@@ -13,7 +13,7 @@ function deviceReady() {
 		
 		//Install events, clicks, resize, online/offline, etc. 
 		installEvents();
-
+		mui.viewport.showPage("home-page", "DEF");
 		//Hide splash.
 		//Ocultar el splash.
 		if (navigator.splashscreen) {
@@ -59,6 +59,7 @@ function installEvents() {
 			    				$("#sign-up-alert").html("La dirección no está disponible.");
 			    				document.getElementById("sign-up-alert").style.visibility = "visible";
 			    				$("#sign-up-mail").addClass("input-invalid");
+			    				mui.vibrate();
 			    			} 
 			    			else if (result === 'no') {
 			    				$("#sign-up-mail").removeClass("input-invalid");
@@ -98,6 +99,32 @@ function installEvents() {
 		    				$("#sign-up-alert").html("El usuario y la contraseña no coinciden.");
 		    				document.getElementById("sign-up-alert").style.visibility = "visible";
 		    				$("#password").value = null;
+		    				mui.vibrate();
+		    			}
+		    		}
+		    	});
+				return false;
+			}
+		},
+		{
+			id: '#log-in-btn',
+			ev: 'click',	
+			fn: () => {
+				var email = $("#log-in-mail").val();
+				var password = $("#log-in-password").val();
+				$.ajax({ 
+		    		type: 'GET', 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/userExists?email='+email+'&password='+password,
+		    		success: function (result) {
+		    			if(result === 'si'){
+		    				document.getElementById("log-in-alert").style.visibility = "hidden";
+		    				mui.viewport.showPage("home-page", "DEF");
+		    			}
+		    			else if (result === 'no') {
+		    				$("#log-in-alert").html("Usuario y/o contraseña inválido.");
+		    				document.getElementById("log-in-alert").style.visibility = "visible";
+		    				$("#password").value = null;
+		    				mui.vibrate();
 		    			}
 		    		}
 		    	});
@@ -116,30 +143,41 @@ function installEvents() {
 				if(name == null || lastname == null || password == null || confPassword == null) {
 					$("#profile-alert").html("Todos los campos son obligatorios.");
     				document.getElementById("profile-alert").style.visibility = "visible";
+    				mui.vibrate();
 				}
 				else if(password.length < 8 || confPassword.length < 8){
 					$("#profile-alert").html("Contraseña menor a 8 caracteres.");
     				document.getElementById("profile-alert").style.visibility = "visible";
+    				mui.vibrate();
 				}
 				else if(password.length > 32 || confPassword.length > 32){
 					$("#profile-alert").html("Contraseña mayor a 32 caracteres.");
     				document.getElementById("profile-alert").style.visibility = "visible";
+    				mui.vibrate();
 				}
 				else if(password != confPassword){
 					$("#profile-alert").html("Las contraseñas no coinciden.");
     				document.getElementById("profile-alert").style.visibility = "visible";
+    				mui.vibrate();
 				}
 				else {
 					document.getElementById("profile-alert").style.visibility = "hidden";
-					var hash = md5(password);
 					$.ajax({ 
 			    		type: 'GET', 
-			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/editUser?email='+email+'&password='+hash+'&name='+name+'&lastname='+lastname,
+			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/editUser?email='+email+'&password='+password+'&name='+name+'&lastname='+lastname,
 			    		success: function () {
 			    			mui.viewport.showPage("home-page", "DEF");
 			    		}
 			    	});
 				}
+				
+				return false;
+			}
+		},
+		{
+			id: '#home-page-btn',	//Important!
+			fn: () => {
+				$()
 				return false;
 			}
 		},
@@ -260,6 +298,7 @@ function installEvents() {
 			}
 		},
 	]);
+
 }
 
 function installEvents2() {

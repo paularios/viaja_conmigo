@@ -19,12 +19,11 @@
 	
 	<script src="phonegap.js"></script>
 	<script src="vendors/fastclick.min.js" type="text/javascript"></script>
-	
 		<link rel="stylesheet" href="mobileui/mui.min.css" type="text/css">
 	    <link rel="stylesheet" href="custom/custom.css" type="text/css">
 	
 	    <script src="phonegap.js"></script>		
-	 	<script src="vendors/fastclick.min.js" type="text/javascript"></script>    	 	
+	 	<script src="vendors/fastclick.min.js" type="text/javascript"></script>  	 	
 	    
 	    <script src="vendors/jquery.min.js" type="text/javascript"></script>
 	    <script src="vendors/jquery.animate-enhanced.js" type="text/javascript"></script>
@@ -61,23 +60,39 @@
 						</div>
 					</div>
 					
-					<!-- PÁGINA DE PERFIL (sin sesión) -->
+					<!-- PÁGINA DE LOG-IN -->
+					<div id='log-in-page' class="mui-page">
+						<div id="log-in-header" class= "logo-ppal-header">
+							<div class="logo-ppal"></div>
+						</div>
+						<div class="mui-page-body mui-scrollable">
+							<div class= "title-div">Iniciar sesión</div>
+							<div class = "form-div">
+									<span id="log-in-alert" class="form-alert-msg">Alerta</span><br>
+									<label for="mail">Dirección de correo electrónico:</label>
+									<input type="text" size="20" maxlength="50" placeholder="Mail" name="log-in-mail" id="log-in-mail" class="field-form">
+									<span class="validity"></span>
+									<label for="mail">Contraseña:</label>
+									<input type="password" size="20" maxlength="50" placeholder="Contraseña" name="log-in-password" id="log-in-password" class="field-form">
+									<span class="validity"></span>
+									<input type="submit" value="Entrar" id="log-in-btn" class="form-btn">
+							</div>
+						</div>
+					</div>
+					
+					<!-- PÁGINA DE PERFIL -->
 					<div id='profile-page' class="mui-page">
 						<div class="logo-ppal-header">
 							<a class="mui-backarrow" href="#"></a>
 							<div class="logo-ppal"></div>
 						</div>
-						<div class="mui-page-body mui-scrollable">
+						<div class="mui-page-body">
 							<div class="profile-pic-div">
 								<div class= "profile-pic">
-									<div id="profile-pic-overlay" class="overlay">Cambiar foto</div>
+									<div id="profile-pic-overlay" class="overlay"> Cambiar foto</div>
 								</div>
-								<!-- <div class= "addphoto">
-									<div class="addsign"></div>
-									Agregar foto
-								</div>  -->
 							</div>
-							<div class = "form-div">
+							<div class = "form-div mui-scrollable">
 								<label for="nombre">Nombre:</label>
 								<input type="text" size="20" maxlength="50" placeholder="Nombre" name="profile-name" id="profile-name" class="field-form">
 								<label for="nombre">Apellido:</label>
@@ -94,46 +109,37 @@
 					
 					<!-- PÁGINA DE INICIO (MAPA) -->
 					<div id="home-page" class="mui-page">
-						<div id="destination">
-							<input id="destination-box" type="text" placeholder="Destino">
-						</div> 
-						<div id="buttons-board">
-							<div class="circle-button-div">
-								<input type="button" class="circle-button">
+					 	<div id="map">
+						 	<div class="logo-mmal-header">
+								<div class="logo-mmal"></div>
 							</div>
-							<div class="circle-button-div">
-								<input type="button" class="circle-button">
-							</div>
-							<div class="circle-button-div">
-								<input type="button" class="circle-button">
-							</div>
-						</div>
-					</div>
-					
-					<!-- 
-					<div id='template-page' class="mui-page">
-						<div class="mui-page-header">
-							<a class="mui-backarrow" href="#"></a>
-							<div class='mui-page-title'>Page 2</div>
-							<a class="mui-headmenu" href="#"></a>
-						</div>
-						<div class="mui-page-body mui-scrollable" id="second-body">
-							<div> 
-								<div style="margin: 50px; text-align: center;">
-									Press back arrow or swipe to the right
+						 	<div class="mui-page-body">
+								<div id="destination-div">
+									<input id="destination" type="text" placeholder="¿A dónde querés ir?">
+								</div>
+								<input type="submit" value="Viajar" id="home-page-btn" class="form-btn">
+								<div id="buttons-board">
+									<div class="circle-button-div">
+										<input type="button" id="home-page-profile-btn" class="circle-button">
+									</div>
+									<div class="circle-button-div">
+										<input type="button" id="home-page-history-btn" class="circle-button">
+									</div>
+									<div class="circle-button-div">
+										<input type="button" id="home-page-notifications-btn" class="circle-button">
+									</div>
+								</div>
+								<div id="ride-panel">
+			
 								</div>
 							</div>
 						</div>
-					</div>
-					-->
-					
+					</div>					
 				</div>	
-				
 			</div>	
 			
 			<!-- mui-screen level panel -->
-			<!-- Panel a nivel de mui-screen -->
-			<div id="menu-panel" class="mui-panel">
+			<!-- <div id="ride-panel" class="mui-panel">
 				<div class="mui-panel-header">
 					<div class='mui-panel-title'>Menu</div>
 				</div>
@@ -145,8 +151,8 @@
 						</ul>
 					</div>
 				</div>
-			</div>	
-							 
+			</div>	 -->
+				 			 
 	    </div>
 	</body>
 </html>
