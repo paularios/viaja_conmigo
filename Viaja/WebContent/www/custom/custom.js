@@ -10,7 +10,7 @@ function deviceReady() {
 			else
 				mui.alert('We recommend you connect your device to the Internet');
 		}
-		//mui.viewport.showPage('home-page', 'DEF');
+		mui.viewport.showPage('home-page', 'DEF');
 		//Install events, clicks, resize, online/offline, etc. 
 		installEvents();
 		pushNotificationRegister();

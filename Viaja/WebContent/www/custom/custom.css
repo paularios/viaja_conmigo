@@ -462,7 +462,13 @@ a {
 }
 
 #driver-div {
-	display: none;
+	/*display: none;*/
+	position: relative;
+	height: 50%;
+	width: 90%;
+	top:20%;
+	margin: auto;
+	background-color: green;
 }
 
 #passenger-div {
