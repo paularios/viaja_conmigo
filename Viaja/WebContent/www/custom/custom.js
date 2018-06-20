@@ -10,10 +10,10 @@ function deviceReady() {
 			else
 				mui.alert('We recommend you connect your device to the Internet');
 		}
-		
+		//mui.viewport.showPage('home-page', 'DEF');
 		//Install events, clicks, resize, online/offline, etc. 
 		installEvents();
-		mui.viewport.showPage("home-page", "DEF");
+		pushNotificationRegister();
 		//Hide splash.
 		//Ocultar el splash.
 		if (navigator.splashscreen) {
@@ -42,37 +42,64 @@ function installEvents() {
 			}
 		},
 		{
+			id: '#vc-log-in-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.viewport.showPage('log-in-page', 'DEF');
+				return false;
+			}
+		},
+		{
+			id: '#vc-sign-up-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.viewport.showPage('sign-up-page', 'DEF');
+				return false;
+			}
+		},
+		{
+			id: '#user-edit-profile',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.history.back();
+				mui.viewport.showPage('profile-page', 'DEF');
+				return false;
+			}
+		},
+		{
 			id: '#sign-up-send-mail-btn',
 			ev: 'click',	
 			fn: () => {	
-				var email = $("#sign-up-mail").val();
-				if(email.split("@")[1] != "correo.um.edu.uy" && email.split("@")[1] != "um.edu.uy" ) {
-					$("#sign-up-alert").html("La dirección no pertenece al dominio UM.");
-					document.getElementById("sign-up-alert").style.visibility = "visible";
+				var email = $('#sign-up-mail').val();
+				if(email.split('@')[1] != 'correo.um.edu.uy' && email.split('@')[1] != 'um.edu.uy' ) {
+					$('#sign-up-alert').html('La dirección no pertenece al dominio UM.');
+					document.getElementById('sign-up-alert').style.visibility = 'visible';
 				} else {
-					document.getElementById("sign-up-alert").style.visibility = "hidden";
+					document.getElementById('sign-up-alert').style.visibility = 'hidden';
 					$.ajax({ 
 			    		type: 'GET', 
 			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/validMail?email='+email,
 			    		success: function (result) {
 			    			if(result === 'si'){
-			    				$("#sign-up-alert").html("La dirección no está disponible.");
-			    				document.getElementById("sign-up-alert").style.visibility = "visible";
-			    				$("#sign-up-mail").addClass("input-invalid");
+			    				$('#sign-up-alert').html('La dirección no está disponible.');
+			    				document.getElementById('sign-up-alert').style.visibility = 'visible';
+			    				$('#sign-up-mail').addClass('input-invalid');
 			    				mui.vibrate();
 			    			} 
 			    			else if (result === 'no') {
-			    				$("#sign-up-mail").removeClass("input-invalid");
-			    				$("#sign-up-mail").addClass("input-valid");
-			    				document.getElementById("sign-up-alert").style.visibility = "hidden";
+			    				$('#sign-up-mail').removeClass('input-invalid');
+			    				$('#sign-up-mail').addClass('input-valid');
+			    				document.getElementById('sign-up-alert').style.visibility = 'hidden';
+			    				mui.busy(true);
 			    				$.ajax({ 
 			    		    		type: 'GET', 
 			    		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/createUser?email='+email,
 			    		    		success: function () {
-			    		    			document.getElementById("sign-up-send-mail-btn").style.display = "none";
-			    		    			$("#passwordDiv").animate({
+			    		    			document.getElementById('sign-up-send-mail-btn').style.display = 'none';
+			    		    			$('#passwordDiv').animate({
 			    		    	            height: 'toggle',
-			    		    	        });		
+			    		    	        });	
+			    		    			mui.busy(false);
 			    		    		}
 			    		    	});
 			    			}
@@ -85,21 +112,21 @@ function installEvents() {
 			id: '#sign-up-btn',
 			ev: 'click',	
 			fn: () => {
-				var email = $("#sign-up-mail").val();
-				var password = $("#sign-up-password").val();
+				var email = $('#sign-up-mail').val();
+				var password = $('#sign-up-password').val();
 				$.ajax({ 
 		    		type: 'GET', 
-		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/userExists?email='+email+'&password='+password,
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/logIn?email='+email+'&password='+password,
 		    		success: function (result) {
-		    			if(result === 'si'){
-		    				document.getElementById("sign-up-alert").style.visibility = "hidden";
-		    				mui.viewport.showPage("profile-page", "DEF");
-		    			}
-		    			else if (result === 'no') {
-		    				$("#sign-up-alert").html("El usuario y la contraseña no coinciden.");
-		    				document.getElementById("sign-up-alert").style.visibility = "visible";
-		    				$("#password").value = null;
+		    			if(result === 'unAuthorized'){
+		    				$('#sign-up-alert').html('El usuario y la contraseña no coinciden.');
+		    				document.getElementById('sign-up-alert').style.visibility = 'visible';
+		    				$('#password').value = null;
 		    				mui.vibrate();
+		    			}
+		    			else {
+		    				document.getElementById('sign-up-alert').style.visibility = 'hidden';
+		    				mui.viewport.showPage('profile-page', 'DEF');
 		    			}
 		    		}
 		    	});
@@ -110,21 +137,23 @@ function installEvents() {
 			id: '#log-in-btn',
 			ev: 'click',	
 			fn: () => {
-				var email = $("#log-in-mail").val();
-				var password = $("#log-in-password").val();
+				var email = $('#log-in-mail').val();
+				var password = $('#log-in-password').val();
+				mui.busy(true);
 				$.ajax({ 
 		    		type: 'GET', 
-		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/userExists?email='+email+'&password='+password,
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/logIn?email='+email+'&password='+password,
 		    		success: function (result) {
-		    			if(result === 'si'){
-		    				document.getElementById("log-in-alert").style.visibility = "hidden";
-		    				mui.viewport.showPage("home-page", "DEF");
-		    			}
-		    			else if (result === 'no') {
-		    				$("#log-in-alert").html("Usuario y/o contraseña inválido.");
-		    				document.getElementById("log-in-alert").style.visibility = "visible";
-		    				$("#password").value = null;
+		    			mui.busy(false);
+		    			if(result === 'unAuthorized'){
+		    				$('#log-in-alert').html('El usuario y la contraseña no coinciden.');
+		    				document.getElementById('log-in-alert').style.visibility = 'visible';
+		    				$('#password').value = null;
 		    				mui.vibrate();
+		    			}
+		    			else {
+		    				document.getElementById('log-in-alert').style.visibility = 'hidden';
+		    				mui.viewport.showPage('home-page', 'DEF');
 		    			}
 		    		}
 		    	});
@@ -135,38 +164,50 @@ function installEvents() {
 			id: '#profile-btn',
 			ev: 'click',	
 			fn: () => {	
-				var email = $("#sign-up-mail").val();
-				var name = $("#profile-name").val();
-				var lastname = $("#profile-lastname").val();
-				var password = $("#profile-password").val();
-				var confPassword = $("#profile-confirm-password").val();
+				var email = $('#sign-up-mail').val();
+				var name = $('#profile-name').val();
+				var lastname = $('#profile-lastname').val();
+				var password = $('#profile-password').val();
+				var confPassword = $('#profile-confirm-password').val();
 				if(name == null || lastname == null || password == null || confPassword == null) {
-					$("#profile-alert").html("Todos los campos son obligatorios.");
-    				document.getElementById("profile-alert").style.visibility = "visible";
+					$('#profile-alert').html('Todos los campos son obligatorios.');
+    				document.getElementById('profile-alert').style.visibility = 'visible';
     				mui.vibrate();
 				}
 				else if(password.length < 8 || confPassword.length < 8){
-					$("#profile-alert").html("Contraseña menor a 8 caracteres.");
-    				document.getElementById("profile-alert").style.visibility = "visible";
+					$('#profile-alert').html('Contraseña menor a 8 caracteres.');
+    				document.getElementById('profile-alert').style.visibility = 'visible';
     				mui.vibrate();
 				}
 				else if(password.length > 32 || confPassword.length > 32){
-					$("#profile-alert").html("Contraseña mayor a 32 caracteres.");
-    				document.getElementById("profile-alert").style.visibility = "visible";
+					$('#profile-alert').html('Contraseña mayor a 32 caracteres.');
+    				document.getElementById('profile-alert').style.visibility = 'visible';
     				mui.vibrate();
 				}
 				else if(password != confPassword){
-					$("#profile-alert").html("Las contraseñas no coinciden.");
-    				document.getElementById("profile-alert").style.visibility = "visible";
+					$('#profile-alert').html('Las contraseñas no coinciden.');
+    				document.getElementById('profile-alert').style.visibility = 'visible';
     				mui.vibrate();
 				}
 				else {
-					document.getElementById("profile-alert").style.visibility = "hidden";
+					document.getElementById('profile-alert').style.visibility = 'hidden';
+					mui.busy(true);
 					$.ajax({ 
 			    		type: 'GET', 
-			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/editUser?email='+email+'&password='+password+'&name='+name+'&lastname='+lastname,
-			    		success: function () {
-			    			mui.viewport.showPage("home-page", "DEF");
+			    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/editUser?password='+password+'&name='+name+'&lastname='+lastname,
+			    		success: function (result) {
+			    			mui.busy(false);
+			    			if(result === 'unAuthorized'){
+			    				$('#profile-alert').html('Error. Cambios no guardados');
+			    				document.getElementById('profile-alert').style.visibility = 'visible';
+			    				$('#password').value = null;
+			    				mui.vibrate();
+			    			}
+			    			else if (result === 'updated') {
+			    				
+			    				document.getElementById('profile-alert').style.visibility = 'hidden';
+			    				mui.viewport.showPage('home-page', 'DEF');
+			    			}
 			    		}
 			    	});
 				}
@@ -175,9 +216,57 @@ function installEvents() {
 			}
 		},
 		{
-			id: '#home-page-btn',	//Important!
+			id: '#profile-pic-overlay',	//Important!
+			ev: 'click',
 			fn: () => {
-				$()
+				navigator.camera.getPicture(function(result){
+					console.log(result);
+					},function(error){
+					console.log(error);
+					},{
+					sourceType : Camera.PictureSourceType.CAMERA
+				});
+				return false;
+			}
+		},
+		{
+			//**********************************************
+			//**********************************************
+			//************************************************* CORREGIR ANIMACION
+			id: '#home-page-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				if ($('#destination').val() == null) {
+					mui.alert('tab 1','Selected');
+				} else {
+					sendPushNotification();
+					mui.screen.showPanel('ride-panel', 'FLOAT_DOWN');
+				}
+				
+				return false;
+			}
+		},
+		{
+			id: '#home-page-profile-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.screen.showPanel('profile-panel', 'FLOAT_RIGHT');
+				return false;
+			}
+		},
+		{
+			id: '#home-page-history-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.screen.showPanel('history-panel', 'FLOAT_RIGHT');
+				return false;
+			}
+		},
+		{
+			id: '#home-page-notifications-btn',	//Important!
+			ev: 'click',
+			fn: () => {
+				mui.screen.showPanel('notifications-panel', 'FLOAT_RIGHT');
 				return false;
 			}
 		},
@@ -186,69 +275,7 @@ function installEvents() {
 			ev: 'click',	//If not, it assumes click
 			fn: () => {
 				//ATTENTION!!! mui.screen instead of mui.viewport
-				mui.screen.showPanel("menu-panel", "SLIDE_LEFT");
-				return false;
-			}
-		},
-		{
-			id: '#delete-me',
-			ev: 'click',	//If not, it assumes click
-			fn: () => {
-				mui.viewport.showPage("template-page", "DEF");
-				return false;
-			}
-		},
-		{
-			id: '#option1',
-			fn: () => {
-				mui.screen.closePanel(function() {
-					mui.viewport.showPage("home-page", "DEF");
-				});
-				return false;
-			}
-		},
-		{
-			id: '#option2',
-			fn: () => {
-				mui.screen.closePanel(function() {
-					mui.viewport.showPage("template-page", "DEF");
-				});
-				return false;
-			}
-		},
-		//Toolbar options ------------------------------------------
-		{
-			id: '#tabbar-button1',
-			fn: () => {
-				mui.alert("tab 1","Selected");
-				return false;
-			}
-		},
-		{
-			id: '#tabbar-button2',
-			fn: () => {
-				mui.alert("tab 2","Selected");
-				return false;
-			}
-		},
-		{
-			id: '#tabbar-button3',
-			fn: () => {
-				mui.alert("tab 3","Selected");
-				return false;
-			}
-		},
-		{
-			id: '#tabbar-button4',
-			fn: () => {
-				mui.alert("tab 4","Selected");
-				return false;
-			}
-		},
-		{
-			id: '#tabbar-button5',
-			fn: () => {
-				mui.alert("tab 5","Selected");
+				mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');
 				return false;
 			}
 		},
@@ -264,10 +291,10 @@ function installEvents() {
 		},
 		{
 			vp: mui.viewport,
-			ev: 'swipeleftdiscover',
+			ev: 'swipedowndiscover',
 			fn: () => {
 				if (!mui.viewport.panelIsOpen()) {
-					mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');	//ATENTION!!! mui.screen instead mui.viewport
+					mui.screen.showPanel('ride-panel', 'SLIDE_DOWN');	//ATENTION!!! mui.screen instead mui.viewport
 					return false;
 				}
 			}
@@ -305,48 +332,48 @@ function installEvents2() {
 
 	//It's a good idea to consider what happens when the device is switched on and off the internet.
 	//Es buena idea considerar que pasa cuando el dispositivo se conecta y desconecta a Internet.
-	document.addEventListener("online", function() {
+	document.addEventListener('online', function() {
 		//somthing
 	}, false);
 	
 	//Back button.
-	$(".mui-backarrow").click(function() {
+	$('.mui-backarrow').click(function() {
 		mui.history.back();
 		return false;
 	});
 	
 	//Open menu.
-	$(".mui-headmenu").click(function() {
-		mui.screen.showPanel("menu-panel", "SLIDE_LEFT");	//ATTENTION!!! mui.screen instead of mui.viewport
+	$('.mui-headmenu').click(function() {
+		mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');	//ATTENTION!!! mui.screen instead of mui.viewport
 		return false;
 	});
 
-	$("#tabbar-button1").click(function() {
-		mui.alert("tab 1","Selected");
+	$('#tabbar-button1').click(function() {
+		mui.alert('tab 1','Selected');
 		return false;
 	});
 	
-	$("#tabbar-button2").click(function() {
-		mui.alert("tab 1","Selected");
+	$('#tabbar-button2').click(function() {
+		mui.alert('tab 1','Selected');
 		return false;
 	});
 	
-	$("#tabbar-button3").click(function() {
-		mui.alert("tab 3","Selected");
+	$('#tabbar-button3').click(function() {
+		mui.alert('tab 3','Selected');
 		return false;
 	});
 	
-	$("#tabbar-button4").click(function() {
-		mui.alert("tab 4","Selected");
+	$('#tabbar-button4').click(function() {
+		mui.alert('tab 4','Selected');
 		return false;
 	});
 	
-	$("#tabbar-button5").click(function() {
-		mui.alert("tab 5","Selected");
+	$('#tabbar-button5').click(function() {
+		mui.alert('tab 5','Selected');
 		return false;
 	});
 	
-	$("#menuoptions").click(function() {
+	$('#menuoptions').click(function() {
 		return false;
 	});
 	
@@ -355,7 +382,7 @@ function installEvents2() {
 	/*******************************************************************************/	
 	//Swipe touch events. Cool for best App user experience!
 	//Evento de desplazamiento tactil. Buenisimo para una óptima experiencia de usuario en App!
-	mui.viewport.on("swiperight", function(currentPageId, originalTarget, event, startX, startY, endX, endY) {
+	mui.viewport.on('swiperight', function(currentPageId, originalTarget, event, startX, startY, endX, endY) {
 		if (!mui.viewport.panelIsOpen()) {
 			mui.history.back();
 		}
