@@ -90,6 +90,45 @@ a {
 	color: red;
 }
 
+.no-map-page {
+	background: url(images/mainBackgroundFaded.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+/* Init Page ------------------------------------------------------------------ */
+#init-logo {
+	height: 30%;
+	width: 80%;
+	margin: auto;
+	margin-top: 30%;
+	margin-bottom: 30%;
+	background-position: center;
+	background-size:100%;
+	transform: scale(1.2);
+}
+
+.init-btn {
+	height: 45px;
+	width: 80%;
+	margin: auto;
+	margin-bottom: 3%;
+	display: block;
+	border: none;
+	color: white;
+	font-size: 18px;
+	outline: none;
+}
+
+#vc-log-in-btn {
+	background-color: tomato;
+}
+
+#vc-sign-up-btn {
+	background-color: #1E90FF;
+}
+
 /* sign-up Page --------------------------------------------------------------- */
 #sign-up-page .mui-scrollable {
 	margin-top: 45%;
@@ -146,6 +185,7 @@ a {
 	display: block;
 	margin-top: 5%;
 	margin-bottom: 5%;
+	background: none;
 	border: none;
 	border-bottom:solid tomato 1px;
 }
@@ -286,9 +326,10 @@ a {
 
 #home-page .logo-mmal-header {
 	position: absolute;
-	bottom: 10%;
+	bottom: 5%;
+	right: 5%; 
 	height: 10%;
-	width: 100%;
+	width: 20%;
 }
 
 #home-page .logo-mmal-header .logo-mmal {
@@ -297,11 +338,11 @@ a {
     margin: auto;
     background-color: none;
     background-position: right;
-    background-size: 20%;
+    background-size: 95%;
     background-repeat: no-repeat;
 }
 
-#destination-div{
+#destination-div {
 	position: absolute;
 	height: 8%;
     width: 90%;
@@ -316,7 +357,7 @@ a {
     background-color: white;
 }
 
-#destination{
+#destination {
 	height: 100%;
 	width: 60%;
   	padding: 2%;
@@ -327,6 +368,13 @@ a {
 	outline: none;
 }
 
+#destination:before {
+	font-family: FontAwesome;
+	content: '\f002';
+	font-size: 10px;
+	color: black;
+}
+
 #home-page-btn {
 	position: absolute;
 	width: 90%;
@@ -335,16 +383,16 @@ a {
 	margin-right: 5%;
 }
 
-#buttons-board{
+#buttons-board {
 	position: absolute;
-	top: 30%;
+	top: 35%;
 	left: 3%;
 	height: 35%;
 	width: 20%;
 	display: inline-block;
 }
 
-.circle-button-div{
+.circle-button-div {
   	height: 33.3%;
   	margin-bottom: 5%;
 }
@@ -388,16 +436,139 @@ a {
 }
 
 /* Panels ------------------------------------------------------------------------- */
+
+/* Panel de viajes ---------------------------------------------------------------- */
 #ride-panel {
 	position: absolute;
-    height: 50%;
-    width: 90%;
-    top: 25%;
-    margin-left: 5%;
-    margin-right: 5%;
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	visibility: hidden;
+	top: -100%;
+    left: 0px;
+    height: 90%;
+    width: 100%;
+    padding: 5%;
+    background-color: white;/* rgba(0,0,0,0.4);Black w/ opacity */
+	/*visibility: hidden;*/
 }
+
+.ride-btn {
+	position: relative;
+    height: 10%;
+    width: 40%;
+    margin: 5%;
+    display: inline-block;
+    float: left;
+    color: white;
+	background-color: tomato;
+	outline: none;
+}
+
+#driver-div {
+	display: none;
+}
+
+#passenger-div {
+	display: none;
+}
+
+/* Paneles que aparecen del lado izquierdo ---------------------------------------- */
+.left-panel {
+	position: absolute;
+	top: 0px;
+    left: -100%;
+    height: 100%;
+    width: 90%;
+    background-color: white;
+}
+
+.left-panel .mui-panel-header {
+	position: relative;
+	top: 5%;
+	height: 15%;
+	width: 100%;
+	padding: 3%;
+}
+
+.left-panel .mui-panel-header .mui-panel-title {
+	font-family: 'ARCENA';
+	font-size: 30px;
+	text-align: center;
+	color: tomato; 
+}
+
+.left-panel .mui-panel-body {
+	position: relative;
+}
+
+/* Panel de perfil ---------------------------------------------------------------- */
+#profile-panel .form-div {
+	position: relative;
+	height: 65%;
+	width: 80%;
+	margin: 10%;
+	margin-top: 4%;
+	padding: 5%;
+}
+
+#profile-panel .field-form {
+	width: 80%;
+}
+
+#profile-panel .profile-pic-div {
+	position: relative;
+	top: 5%; 
+	height: 25%;
+	margin-bottom: 10%;
+}
+
+#profile-panel .profile-pic-div .profile-pic {
+    position: relative;
+    height: 100%;
+    width: 50%;
+    margin: auto;
+    border-radius: 150px;
+    background-image: url(images/profileIcon.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#profile-panel #profile-pic-overlay {
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  padding: 20px;
+  font-size: 10px;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); /* Black see-through*/ 
+  opacity:0;
+  transition: .5s ease;
+}
+
+#profile-panel #profile-pic-overlay:before {
+	font-family: 'FontAwesome';
+	content: '\f030';
+	font-size: 12px;
+}
+
+#profile-panel .profile-pic-div .profile-pic:hover #profile-pic-overlay{
+  opacity: 1;
+}
+
+#user-edit-profile {
+	position: relative;
+	margin-right:20%;
+	text-align: right;
+	font-size: 12px;
+	color: tomato;
+}
+
+#user-edit-profile:before {
+	font-family: 'FontAwesome';
+	content: '\f044';
+	font-size: 16px;
+	color: tomato;	
+}
+
+
 
 /* GoBack button ------------------------------------------------------------------ */
 .mui-backarrow {
@@ -498,20 +669,6 @@ a {
 	top: 0px;
 	left: 0px;
 	padding-top: 33px;
-}
-/* Menu sample ------------------------------------------------------------------ */
-#menu-panel {
-	top: 0px;
-	left: 100%;
-	width: 90%;
-	max-width: 250px;
-	height: 100%;
-	background-color: #575757;
-	color: #fff;
-}
-
-.mui-panel-header {
-	display: none;
 }
 
 .input-invalid+span:after {

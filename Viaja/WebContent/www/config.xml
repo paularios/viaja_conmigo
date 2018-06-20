@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns='http://www.w3.org/ns/widgets'
-	xmlns:gap='http://phonegap.com/ns/1.0' id="your.app.id" versionCode="1"
+	xmlns:gap='http://phonegap.com/ns/1.0' id="com.viajaconmigo.app" versionCode="1"
 	version="0.0.1">
 
 	<name>ViajáConmigo</name>
@@ -37,7 +37,7 @@
 	<access origin="*" />
 	<allow-navigation href="*" />
 	<allow-intent href="*" />
-
+ 
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-dialogs" />
@@ -58,7 +58,11 @@
 	<preference name="StatusBarOverlaysWebView" value="false" />
 	<preference name="StatusBarBackgroundColor" value="#000000" />
 	<preference name="StatusBarStyle" value="lightcontent" />
-
+ 	
+	<plugin name="phonegap-plugin-push" spec="1.8.1">
+		<param name="SENDER_ID" value="991349295611" />
+	</plugin> 	
+	
 	<!-- ********************************************************************************** -->
 	<!-- ********************** ICONS & SPLASH CONFIGURATION ****************************** -->
 	<!-- ********************************************************************************** -->
@@ -147,5 +151,4 @@
 		<splash src="pgbomit/splash/android/hdpi.png" density="hdpi" /> <!-- 480x800 : 480x640 -->
 		<splash src="pgbomit/splash/android/xhdpi.png" density="xhdpi" /> <!-- 720x1280 : 720x960 -->
 	</platform>
-
 </widget>

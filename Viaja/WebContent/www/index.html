@@ -31,16 +31,47 @@
 	    <script src="vendors/iscroll-min.js" type="text/javascript"></script>
 	    
 		<script src="mobileui/mui.min.js" type="text/javascript"></script>
+		<script src="custom/push.js" type="text/javascript"></script>
 	    <script src="custom/custom.js" type="text/javascript"></script>
 	</head>
 	<body>
 	    <div id="mui-screen" class="mui-viewport">
 			<div id="mui-screen-page" class="mui-page">
 				<div id="mui-viewport" class="mui-viewport">
+				
+				<!-- PÁGINA DEFAULT -->
+					<div id="init-page" class="mui-page no-map-page">
+						<div id="init-logo" class="logo-ppal"></div>
+						<input type="button" id="vc-log-in-btn" class="init-btn" value="Iniciar sesión">
+						<input type="button" id="vc-sign-up-btn" class="init-btn" value="Registrarme">
+					</div>
+				
+				
+				<!-- PÁGINA DE LOG-IN -->
+					<div id="log-in-page" class="mui-page no-map-page">
+						<div id="log-in-header" class= "logo-ppal-header">
+							<a class="mui-backarrow" href="#"></a>
+							<div class="logo-ppal"></div>
+						</div>
+						<div class="mui-page-body mui-scrollable">
+							<div class= "title-div">Iniciar sesión</div>
+							<div class = "form-div">
+									<span id="log-in-alert" class="form-alert-msg">Alerta</span><br>
+									<label for="mail">Dirección de correo electrónico:</label>
+									<input type="text" size="20" maxlength="50" placeholder="Mail" name="log-in-mail" id="log-in-mail" class="field-form">
+									<span class="validity"></span>
+									<label for="mail">Contraseña:</label>
+									<input type="password" size="20" maxlength="50" placeholder="Contraseña" name="log-in-password" id="log-in-password" class="field-form">
+									<span class="validity"></span>
+									<input type="submit" value="Entrar" id="log-in-btn" class="form-btn">
+							</div>
+						</div>
+					</div>
 					
-					<!-- PÁGINA DE REGISTRO (primera vez al descargar e instalar la aplicación) -->
-					<div id='sign-up-page' class="mui-page">
+					<!-- PÁGINA DE REGISTRO -->
+					<div id='sign-up-page' class="mui-page no-map-page">
 						<div id="register-header" class= "logo-ppal-header">
+							<a class="mui-backarrow" href="#"></a>
 							<div class="logo-ppal"></div>
 						</div>
 						<div class="mui-page-body mui-scrollable">
@@ -56,26 +87,6 @@
 										<input type="password" size="20" maxlength="50" placeholder="Contraseña" name="sign-up-password" id="sign-up-password" class="field-form">
 										<input type="submit" value="Entrar" id="sign-up-btn" class="form-btn">
 									</div>
-							</div>
-						</div>
-					</div>
-					
-					<!-- PÁGINA DE LOG-IN -->
-					<div id='log-in-page' class="mui-page">
-						<div id="log-in-header" class= "logo-ppal-header">
-							<div class="logo-ppal"></div>
-						</div>
-						<div class="mui-page-body mui-scrollable">
-							<div class= "title-div">Iniciar sesión</div>
-							<div class = "form-div">
-									<span id="log-in-alert" class="form-alert-msg">Alerta</span><br>
-									<label for="mail">Dirección de correo electrónico:</label>
-									<input type="text" size="20" maxlength="50" placeholder="Mail" name="log-in-mail" id="log-in-mail" class="field-form">
-									<span class="validity"></span>
-									<label for="mail">Contraseña:</label>
-									<input type="password" size="20" maxlength="50" placeholder="Contraseña" name="log-in-password" id="log-in-password" class="field-form">
-									<span class="validity"></span>
-									<input type="submit" value="Entrar" id="log-in-btn" class="form-btn">
 							</div>
 						</div>
 					</div>
@@ -100,7 +111,7 @@
 								<label for="nombre">Nueva contraseña:</label>
 								<input type="password" size="20" maxlength="50" placeholder="Nueva contraseña" name="profile-password" id="profile-password" class="field-form">
 								<label for="nombre">Confirmar contraseña:</label>
-								<input type="password" size="20" maxlength="50" placeholder="Nueva contraseña" name="profile-confirm-password" id="profile-confirm-password" class="field-form">
+								<input type="password" size="20" maxlength="50" placeholder="Confirmar contraseña" name="profile-confirm-password" id="profile-confirm-password" class="field-form">
 								<span id="profile-alert" class="form-alert-msg">Alerta</span>
 								<input type="submit" value="Enviar" id="profile-btn" class="form-btn">
 							</div> 
@@ -111,7 +122,7 @@
 					<div id="home-page" class="mui-page">
 					 	<div class="mui-page-body">
 					 		<div id="map"> </div>
-					 		<div class="logo-mmal-header">
+					 		<div id="home-logo" class="logo-mmal-header">
 								<div class="logo-mmal"></div>
 							</div>
 							<div id="destination-div">
@@ -122,33 +133,82 @@
 								<div class="circle-button-div">
 									<input type="button" id="home-page-profile-btn" class="circle-button">
 								</div>
-								<div class="circle-button-div">
-									<input type="button" id="home-page-history-btn" class="circle-button">
-								</div>
-								<div class="circle-button-div">
-									<input type="button" id="home-page-notifications-btn" class="circle-button">
+								<input type="button" value="Viajar" id="home-page-btn" class="form-btn">
+								<div id="buttons-board">
+									<div class="circle-button-div">
+										<input type="button" id="home-page-profile-btn" class="circle-button">
+									</div>
+									<div class="circle-button-div">
+										<input type="button" id="home-page-history-btn" class="circle-button">
+									</div>
+									<div class="circle-button-div">
+										<input type="button" id="home-page-notifications-btn" class="circle-button">
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>					
+						</div>					
+					</div>	
 				</div>	
-			</div>	
 			
-			<!-- mui-screen level panel -->
-			<!-- <div id="ride-panel" class="mui-panel">
-				<div class="mui-panel-header">
-					<div class='mui-panel-title'>Menu</div>
-				</div>
-				<div class="mui-panel-body">
-					<div>
-						<ul id='menuoptions' class='mui-list'>
-							<li><a id='option1' href="#">Go Home Page</a></li>
-							<li><a id='option2' href="#">Go Page 2</a></li>
-						</ul>
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA CREAR EL VIAJE -->
+				<div id="ride-panel" class="mui-panel">
+					<div class="mui-panel-header">
+					</div>
+					<div class="mui-panel-body">
+						<span>Elige tu rol:</span>
+						<br>
+						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor">
+						<input type="button" id="ride-as-passenger"  class="ride-btn" value="Pasajero">
+						<div id="driver-div"> 
+						</div>
+						<div id="passenger-div"> 
+						</div>
 					</div>
 				</div>
-			</div>	 -->
-				 			 
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA PERFIL -->
+				<div id="profile-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Mi perfil</div>
+					</div>
+					<div class="mui-panel-body">
+						<div class="profile-pic-div">
+							<div class= "profile-pic">
+							</div>
+						</div>
+						<div class = "form-div mui-scrollable">
+							<label for="nombre">Nombre:</label>
+							<input type="text" size="20" maxlength="50" name="user-profile-name" id="user-profile-name" class="field-form" readonly="readonly">
+							<label for="nombre">Apellido:</label>
+							<input type="text" size="20" maxlength="50" name="user-profile-lastname" id="user-profile-lastname"  class="field-form" readonly="readonly">
+							<a id="user-edit-profile">Modificar perfil</a>
+						</div> 
+					</div>
+				</div>
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA HISTORIAL DE VIAJES -->
+				<div id="history-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Historial de viajes</div>
+					</div>
+					<div class="mui-panel-body">
+						
+					</div>
+				</div>
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA NOTIFICACIONES -->
+				<div id="notifications-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Notificaciones</div>
+					</div>
+					<div class="mui-panel-body">	
+					</div>
+				</div>	 			 
+		    </div>
 	    </div>
 	    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR88H93LUtHFj1uCVZNMCr64bxjYOD844&callback=initMap"></script>
     	<script src="gmaps/gmaps.js"></script>
