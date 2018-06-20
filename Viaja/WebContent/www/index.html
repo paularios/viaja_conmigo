@@ -120,13 +120,18 @@
 					
 					<!-- PÁGINA DE INICIO (MAPA) -->
 					<div id="home-page" class="mui-page">
-					 	<div id="map">
-						 	<div id="home-logo" class="logo-mmal-header">
+					 	<div class="mui-page-body">
+					 		<div id="map"> </div>
+					 		<div id="home-logo" class="logo-mmal-header">
 								<div class="logo-mmal"></div>
 							</div>
-						 	<div class="mui-page-body">
-								<div id="destination-div">
-									<input id="destination" type="text" placeholder="¿A dónde querés ir?">
+							<div id="destination-div">
+								<input id="destination" type="text" placeholder="¿A dónde querés ir?">
+							</div>
+							<input type="submit" value="Viajar" id="home-page-btn" class="form-btn" onclick="obtainLatLngFromAddress()">
+							<div id="buttons-board">
+								<div class="circle-button-div">
+									<input type="button" id="home-page-profile-btn" class="circle-button">
 								</div>
 								<input type="button" value="Viajar" id="home-page-btn" class="form-btn">
 								<div id="buttons-board">
@@ -141,71 +146,72 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>					
+						</div>					
+					</div>	
 				</div>	
-			</div>	
 			
-			<!-- mui-screen level panel -->
-			<!-- PANEL PARA CREAR EL VIAJE -->
-			<div id="ride-panel" class="mui-panel">
-				<div class="mui-panel-header">
-				</div>
-				<div class="mui-panel-body">
-					<span>Elige tu rol:</span>
-					<br>
-					<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor">
-					<input type="button" id="ride-as-passenger"  class="ride-btn" value="Pasajero">
-					<div id="driver-div"> 
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA CREAR EL VIAJE -->
+				<div id="ride-panel" class="mui-panel">
+					<div class="mui-panel-header">
 					</div>
-					<div id="passenger-div"> 
-					</div>
-				</div>
-			</div>
-			
-			<!-- mui-screen level panel -->
-			<!-- PANEL PARA PERFIL -->
-			<div id="profile-panel" class="mui-panel left-panel">
-				<div class="mui-panel-header">
-					<div class='mui-panel-title'>Mi perfil</div>
-				</div>
-				<div class="mui-panel-body">
-					<div class="profile-pic-div">
-						<div class= "profile-pic">
+					<div class="mui-panel-body">
+						<span>Elige tu rol:</span>
+						<br>
+						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor">
+						<input type="button" id="ride-as-passenger"  class="ride-btn" value="Pasajero">
+						<div id="driver-div"> 
+						</div>
+						<div id="passenger-div"> 
 						</div>
 					</div>
-					<div class = "form-div mui-scrollable">
-						<label for="nombre">Nombre:</label>
-						<input type="text" size="20" maxlength="50" name="user-profile-name" id="user-profile-name" class="field-form" readonly="readonly">
-						<label for="nombre">Apellido:</label>
-						<input type="text" size="20" maxlength="50" name="user-profile-lastname" id="user-profile-lastname"  class="field-form" readonly="readonly">
-						<a id="user-edit-profile">Modificar perfil</a>
-					</div> 
 				</div>
-			</div>
-			
-			<!-- mui-screen level panel -->
-			<!-- PANEL PARA HISTORIAL DE VIAJES -->
-			<div id="history-panel" class="mui-panel left-panel">
-				<div class="mui-panel-header">
-					<div class='mui-panel-title'>Historial de viajes</div>
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA PERFIL -->
+				<div id="profile-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Mi perfil</div>
+					</div>
+					<div class="mui-panel-body">
+						<div class="profile-pic-div">
+							<div class= "profile-pic">
+							</div>
+						</div>
+						<div class = "form-div mui-scrollable">
+							<label for="nombre">Nombre:</label>
+							<input type="text" size="20" maxlength="50" name="user-profile-name" id="user-profile-name" class="field-form" readonly="readonly">
+							<label for="nombre">Apellido:</label>
+							<input type="text" size="20" maxlength="50" name="user-profile-lastname" id="user-profile-lastname"  class="field-form" readonly="readonly">
+							<a id="user-edit-profile">Modificar perfil</a>
+						</div> 
+					</div>
 				</div>
-				<div class="mui-panel-body">
-					
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA HISTORIAL DE VIAJES -->
+				<div id="history-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Historial de viajes</div>
+					</div>
+					<div class="mui-panel-body">
+						
+					</div>
 				</div>
-			</div>
-			
-			<!-- mui-screen level panel -->
-			<!-- PANEL PARA NOTIFICACIONES -->
-			<div id="notifications-panel" class="mui-panel left-panel">
-				<div class="mui-panel-header">
-					<div class='mui-panel-title'>Notificaciones</div>
-				</div>
-				<div class="mui-panel-body">
-					
-				</div>
-			</div>
-				 			 
+				
+				<!-- mui-screen level panel -->
+				<!-- PANEL PARA NOTIFICACIONES -->
+				<div id="notifications-panel" class="mui-panel left-panel">
+					<div class="mui-panel-header">
+						<div class='mui-panel-title'>Notificaciones</div>
+					</div>
+					<div class="mui-panel-body">	
+					</div>
+				</div>	 			 
+		    </div>
 	    </div>
+	    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR88H93LUtHFj1uCVZNMCr64bxjYOD844&callback=initMap"></script>
+    	<script src="gmaps/gmaps.js"></script>
+    	<script src="gmaps/map.js"></script>  
 	</body>
 </html>
