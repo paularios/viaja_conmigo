@@ -472,7 +472,7 @@ a {
 	width: 90%;
 	top:20%;
 	margin: auto;
-	background-color: gray;
+	padding: 5%;
 }
 
 #driver-div .field-form {
@@ -593,6 +593,16 @@ a {
 	content: '\f044';
 	font-size: 16px;
 	color: tomato;	
+}
+
+#ride-panel label {
+	font-size: 14px;
+	float: left;
+}
+
+#ride-panel .driver-field {
+	width: 80%;
+    margin-bottom: 5%;
 }
 
 
