@@ -46,6 +46,10 @@ a {
 	display: block;
 }
 
+.mui-cover-shield {
+	display: none;
+}
+
 #mui-viewport {
 	top: 0px;
 	bottom: 0px;
@@ -468,7 +472,7 @@ a {
 	width: 90%;
 	top:20%;
 	margin: auto;
-	background-color: green;
+	background-color: gray;
 }
 
 #passenger-div {

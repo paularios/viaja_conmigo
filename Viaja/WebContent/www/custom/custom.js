@@ -1,5 +1,7 @@
 //All ready!. Page &  Cordova loaded.
 //Todo listo!. Página & Cordova cargados.
+document.write('<script src="gmaps/map.js"></script>');
+
 function deviceReady() {
 	try {
 		//Example when Internet connection is needed but not mandatory
@@ -325,6 +327,55 @@ function installEvents() {
 				//Do something if you need
 			}
 		},
+		{ // ACA NO HAY CONTROLES TODAVIA
+			id: '#create-ride-btn',
+			ev: 'click',	
+			fn: () => {	
+				var exitTime = $('#exit-time').val();
+				var numberOfPassengers = $('#number-of-passengers').val();
+				var carRegistration = $('#car-registration').val();
+				var carBrand = $('#car-brand').val();
+				var driverOrigin = $('#origin').val();
+				var driverDestination = $('#destination').val();
+				/*setTimeOut(function(){
+					coordsOverAroute = obtainMultipleCoordsOverAroute(driver_origin, driver_destination);
+				}, 7000);*/
+				console.log(exitTime);
+				console.log(numberOfPassengers);
+				console.log(carRegistration);
+				console.log(carBrand);
+				console.log(driverOrigin);
+				console.log(driverDestination);
+				//console.log(coordsOverAroute);
+				mui.busy(true);
+				$.ajax({ 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/createRide',
+		    		type: 'GET',
+		    		crossDomain: true,
+		    		data: {
+		    			driverOrigin: 'origen',
+		    			driverDestination: 'destino',
+		    			carRegistration: carRegistration.toString(),
+		    			carBrand: carBrand,
+		    			numberOfPassengers: numberOfPassengers,
+		    			exitTime: 'hora'
+		    			/*+'&coordsOverAroute='+coordsOverAroute,*/
+		    		},
+		    		success: function (result) {
+		    			mui.busy(false);
+		    			if(result === 'unAuthorized'){
+		    				mui.alert("Error. No se pudo crear el viaje.");
+		    				mui.vibrate();
+		    			}
+		    			else if (result === 'updated') {
+		    				mui.alert("Viaje creado correctamente.");
+		    				mui.viewPort.closePanel();    			
+		    			}
+		    		}
+				});
+				return false;
+			}
+		}
 	]);
 
 }

@@ -130,7 +130,9 @@
 								<div class="logo-mmal"></div>
 							</div>
 							<div id="destination-div">
-								<input id="destination" type="text" placeholder="¿A dónde querés ir?">
+								<input id="destination" type="text" placeholder="¿A dónde quieres ir?">
+								<input id="origin" type="hidden">
+								<input id="coordsOverAroute" type="hidden">
 							</div>
 							<input type="submit" value="Viajar" id="home-page-btn" class="form-btn" onclick="obtainLatLngFromAddress()">			
 							<!-- <input type="button" value="Viajar" id="home-page-btn" class="form-btn"> -->
@@ -157,10 +159,20 @@
 					<div class="mui-panel-body">
 						<span>Elige tu rol:</span>
 						<br>
-						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor">
+						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor" onclick="showDriverForm()">
 						<input type="button" id="ride-as-passenger"  class="ride-btn" value="Pasajero">
 						<div id="driver-div"> 
-						<!-- datos que se le piden al conductor para crear un viaje -->
+							<form style="display:none;" id="driver-form">
+								<label for="exit-time">Hora de salida:</label>
+								<input type="time" id="exit-time" name="exit-time" size="15"><br>
+								<label for="passengers">Cant pasajeros:</label> 
+								<input type="text" id="number-of-passengers" name="number-of-passengers" size="15"><br>
+								<label for="car-registration">Matricula:</label>
+								<input type="text" id="car-registration" name="car-registration" size="15"><br>
+								<label for="car-brand">Marca del auto:</label>
+								<input type="text" id="car-brand" name="car-brand" size="15">
+								<input type="button" id="create-ride-btn" value="Crear viaje" class="ride-btn">					
+							</form>
 						</div>
 						<div id="passenger-div">
 						<!-- lista de viajes disponibles que tengan los puntos incluidos --> 

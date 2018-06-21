@@ -4,8 +4,7 @@ var originMarker;
 var destinationMarker;
 var gmap;
 var map;
-
-// ******** DRIVER FUNCTIONS ********
+var address;
 
 initMap = function () {
   navigator.geolocation.getCurrentPosition(
@@ -15,6 +14,9 @@ initMap = function () {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      obtainAddressFromLatLng(originCoords, function(address){
+    	  document.getElementById("origin").value = address;
+      });
       gmap = GMaps({
                   div: '#map',
                   zoom: 13,
@@ -27,11 +29,10 @@ initMap = function () {
         icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
         position: new google.maps.LatLng(originCoords.lat,originCoords.lng)
       });
-      setMap(originCoords, map, gmap); 
     },function(error){console.log(error);});
 }
 
-function setMap(originCoords, map, gmap){
+/*function setMap(originCoords, map, gmap){
 	destinationMarker = new google.maps.Marker({
 		map: map,
 		draggable: true,
@@ -45,11 +46,13 @@ function setMap(originCoords, map, gmap){
           lat: this.getPosition().lat(),
           lng: this.getPosition().lng()
         }
-        defineRoute(originCoords, destinationCoords, gmap);
+        defineRoute(originCoords, destinationCoords);
         passengerOriginCoords = {
         		lat: -34.901086,
         		lng: -56.176461
         }
+        coordsOverAroute = obtainMultipleCoordsOverAroute(originCoords, destinationCoords);
+        console.log(coordsOverAroute);
         passengerOriginMarker = new google.maps.Marker({
     		map: map,
     		draggable: true,
@@ -57,15 +60,17 @@ function setMap(originCoords, map, gmap){
             animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(passengerOriginCoords.lat, passengerOriginCoords.lng)
         });
-        passengerJoinCoords = passengerJoinCoords(passengerOriginCoords, originCoords, destinationCoords, gmap)
-        //console.log(passengerJoinCoords);
-        //passengerJoinMarker = new google.maps.Marker({
-    	//	map: map,
-    	//	draggable: true,
-        //    icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        //    animation: google.maps.Animation.DROP,
-        //    position: new google.maps.LatLng(passengerJoinCoords.lat, passengerJoinCoords.lng)
-        //});
+        passengerJoinCoords(passengerOriginCoords, originCoords, destinationCoords, gmap, function(passengerJoinCoords){
+        	console.log("Join coords");
+            console.log(passengerJoinCoords);
+            passengerJoinMarker = new google.maps.Marker({
+        		map: map,
+        		draggable: true,
+                icon: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                animation: google.maps.Animation.DROP,
+                position: new google.maps.LatLng(passengerJoinCoords.lat, passengerJoinCoords.lng)
+            });
+        });
 	});
 }
 
@@ -75,7 +80,7 @@ function toggleBounce() {
 	} else {
         destinationMarker.setAnimation(google.maps.Animation.BOUNCE);
     }
-}
+}*/
 
 function obtainLatLngFromAddress() {
 	var address = document.getElementById('destination').value;
@@ -86,13 +91,35 @@ function obtainLatLngFromAddress() {
 				lat: results[0].geometry.location.lat(),
 				lng: results[0].geometry.location.lng()
 			}
-			destinationMarker.setIcon("https://maps.google.com/mapfiles/ms/icons/yellow-dot.png");
-			destinationMarker.setPosition(results[0].geometry.location);
+			destinationMarker = new google.maps.Marker({
+				map: map,
+				draggable: false,
+		        icon: "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+		        animation: google.maps.Animation.DROP,
+		        position: new google.maps.LatLng(destinationCoords.lat, destinationCoords.lng)
+		    });
+			defineRoute(originCoords, destinationCoords);
 		}
 	});
 }
 
-function defineRoute(originCoords, destinationCoords, gmap) {
+function obtainAddressFromLatLng(coords, callback) {
+	var latlng = new google.maps.LatLng(coords.lat, coords.lng);
+	var geocoder = new google.maps.Geocoder();
+	var address;
+	geocoder.geocode({
+		'latLng': latlng
+	}, function (results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			address = results[0].formatted_address;
+			callback(address);
+		}else{
+			alert('Geocode no tuvo éxito por la siguiente razón: ' + status);
+		}
+	});
+}
+
+function defineRoute(originCoords, destinationCoords) {
 	gmap.drawRoute({
         origin: [originCoords.lat, originCoords.lng],
         destination: [destinationCoords.lat, destinationCoords.lng],
@@ -103,9 +130,7 @@ function defineRoute(originCoords, destinationCoords, gmap) {
     });
 }
 
-// ******** PASSENGER FUNCTIONS ********
-
-function obtainMultipleCoordsOverAroute(originCoords, destinationCoords, gmap) {
+function obtainMultipleCoordsOverAroute(originCoords, destinationCoords) {
 	var coordsLat =[];
   	var coordsLng = [];
   	var ponisLatLng = {}
@@ -127,8 +152,8 @@ function obtainMultipleCoordsOverAroute(originCoords, destinationCoords, gmap) {
   	return coordsLatLng;
 }
 
-function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDestinationCoords, gmap) {
-	coordsOverAroute = obtainMultipleCoordsOverAroute(driverOriginCoords, driverDestinationCoords, gmap);
+function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDestinationCoords, callback) {
+	coordsOverAroute = obtainMultipleCoordsOverAroute(driverOriginCoords, driverDestinationCoords);
 	var originDistance;
 	var shortestDistance;
   	var distances = [];
@@ -142,10 +167,8 @@ function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDe
 		coordsLat = coordsOverAroute.lat
     	coordsLng = coordsOverAroute.lng
 		for (var i=0; i<coordsLat.length; i++) {
-    		for (var j=0; j<coordsLng.length; j++){
-        		originDistance = mui.util.distanceLatLng(passengerOriginCoords.lat, passengerOriginCoords.lng, coordsLat[i], coordsLng[j], "kilometros");
-            	distances.push(originDistance);
-    		}
+    		originDistance = mui.util.distanceLatLng(passengerOriginCoords.lat, passengerOriginCoords.lng, coordsLat[i], coordsLng[i], "kilometros");
+        	distances.push(originDistance);
     	}
 		shortestDistance = distances[0];
     	for (var i=0; i<distances.length; i++) {
@@ -153,24 +176,26 @@ function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDe
     			shortestDistance = distances[i];
     		}
     	}
-    	console.log(distances)
-    	console.log(shortestDistance)
+    	//console.log(distances)
+    	//console.log(shortestDistance)
     	index = distances.indexOf(shortestDistance);
-      	console.log(index);
-    	setTimeout(function(){
-    		console.log(coordsLat[parseInt(index)]);
-      		joinCoordsLat = coordsLat[parseInt(index)];
-      		console.log(joinCoordsLat);
-      	}, 5000);
-    	setTimeout(function(){
-      		joinCoordsLng = coordsLng[parseInt(index)];
-      		console.log(joinCoordsLng);
-      	}, 5000);
+      	//console.log(index);
+      	//console.log(coordsLat);
+      	//console.log('jjjjj'+coordsLat[index]);
+		//console.log(coordsLat[parseInt(index)]);
+  		joinCoordsLat = coordsLat[parseInt(index)];
+  		//console.log(joinCoordsLat);
+  		joinCoordsLng = coordsLng[parseInt(index)];
+  		//console.log(joinCoordsLng);
     	joinCoords = {
             lat: joinCoordsLat,
             lng: joinCoordsLng
         }
-        console.log(joinCoords);
-	}, 5000);
-  	return joinCoords;
+        //console.log(joinCoords);
+      	callback(joinCoords);
+	}, 7000);
+}
+
+function showDriverForm() {
+	document.getElementById("driver-form").style.display = "block";
 }
