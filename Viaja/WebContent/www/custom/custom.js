@@ -1,5 +1,7 @@
 //All ready!. Page &  Cordova loaded.
 //Todo listo!. Página & Cordova cargados.
+document.write('<script src="gmaps/map.js"></script>');
+
 function deviceReady() {
 	try {
 		//Example when Internet connection is needed but not mandatory
@@ -324,6 +326,46 @@ function installEvents() {
 				//Do something if you need
 			}
 		},
+		{ // ACA NO HAY CONTROLES TODAVIA
+			id: '#create-ride-btn',
+			ev: 'click',	
+			fn: () => {	
+				var exit_time = document.getElementById("exit-time").value;
+				var number_of_passengers = document.getElementById("number-of-passengers").value;
+				var car_registration = document.getElementById("car-registration").value;
+				var car_brand = document.getElementById("car-brand").value;
+				var driver_origin = document.getElementById("origin").value;
+				var driver_destination = document.getElementById("destination").value;
+				alert("hola");
+				/*setTimeOut(function(){
+					coordsOverAroute = obtainMultipleCoordsOverAroute(driver_origin, driver_destination);
+				}, 7000);*/
+				console.log(exit_time);
+				console.log(number_of_passengers);
+				console.log(car_registration);
+				console.log(car_brand);
+				console.log(driver_origin);
+				console.log(driver_destination);
+				//console.log(coordsOverAroute);
+				mui.busy(true);
+				$.ajax({ 
+		    		type: 'GET', 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/createRide?driver_origin='+driver_origin+'&driver_destination='+driver_destination+'&exit_time='+exit_time+'&number_of_passengers='+number_of_passengers+'&car_registration='+car_registration+'&car_brand='+car_brand/*+'&coordsOverAroute='+coordsOverAroute*/,
+		    		success: function (result) {
+		    			mui.busy(false);
+		    			if(result === 'unAuthorized'){
+		    				mui.alert("Error. No se pudo crear el viaje.");
+		    				mui.vibrate();
+		    			}
+		    			else if (result === 'updated') {
+		    				mui.alert("Viaje creado correctamente.");
+		    				mui.history.back();			    			
+		    			}
+		    		}
+				});
+				return false;
+			}
+		}
 	]);
 
 }
