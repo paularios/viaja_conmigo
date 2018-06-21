@@ -83,7 +83,7 @@ function sendTokenForPushNotification(tokenId) {
 		})
 		 .done(function(data) {
 			 pushNotificationTokenId = tokenId;	//Establezco la variable global.
-			 alert(pushNotificationTokenId);
+			 //alert(pushNotificationTokenId);
 		 })
 		 .fail(function(err) {
 			 //mui.alert(err, "Atención");

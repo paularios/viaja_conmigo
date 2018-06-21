@@ -180,7 +180,10 @@ function installEvents() {
 		    			if(result === 'eliminatedSession'){
 		    				mui.screen.closePanel('profile-panel', 'SLIDE_LEFT');
 		    				mui.viewport.showPage('init-page', 'DEF');
-		    				mui.history = null;
+		    				for(i=0;  i < mui.history.elements.length-1; i++) {
+		    					mui.history.elements.pop();
+		    				}
+		    				//mui.history = null;
 		    			}else{
 		    				alert('Ya no está logueado!');	
 		    			}
@@ -377,6 +380,7 @@ function installEvents() {
 				var carBrand = $('#car-brand').val();
 				var driverOrigin = $('#origin').val();
 				var driverDestination = $('#destination').val();
+				var coordsOverAroute;
 				/*setTimeout(function(){
 					coordsOverAroute = obtainMultipleCoordsOverAroute(driver_origin, driver_destination);
 				}, 7000);*/
