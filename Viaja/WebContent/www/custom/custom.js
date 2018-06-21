@@ -505,6 +505,21 @@ function installEvents() {
 	    				}, 16000);
 		    		}
 				});
+				
+				$.ajax({ 
+					type: 'GET', 
+					url: 'https://viaja-conmigo-servidor.herokuapp.com/rides/addUserToRide?email='+driver_email,
+					success: function (result){
+						console.log(result);
+						if(result === 'updated'){
+							mui.busy(false);
+							mui.toast("Se unió a un viaje. Vea la ruta en el mapa.");
+						} else {
+							alert("Error. "+result);
+						}
+					}
+				});
+				
 				mui.busy(false);
 				return false;
 			}
