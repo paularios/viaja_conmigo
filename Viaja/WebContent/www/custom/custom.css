@@ -455,7 +455,7 @@ a {
 
 .ride-btn {
 	position: relative;
-    height: 10%;
+    height: 20%;
     width: 40%;
     margin: 5%;
     display: inline-block;
@@ -486,7 +486,6 @@ a {
 	width: 90%;
 	top:20%;
 	display: none;
-	background-color: red;
 }
 
 /* Paneles que aparecen del lado izquierdo ---------------------------------------- */
@@ -604,8 +603,6 @@ a {
 	width: 80%;
     margin-bottom: 5%;
 }
-
-
 
 /* GoBack button ------------------------------------------------------------------ */
 .mui-backarrow {

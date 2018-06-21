@@ -423,6 +423,7 @@ function installEvents() {
 			id: '#ride-as-passenger',
 			ev: 'click',	
 			fn: () => {	
+				mui.busy();
 				var passengerOriginCoords;
 				var passengerDestinationCoords;
 				var addressOrigin = document.getElementById("origin").value;
@@ -462,7 +463,7 @@ function installEvents() {
 		    			console.log(result);
 	    				for (var i=0; i < result.length; i++) {
 	    					if (result[i].origin == null || result[i].destination == null || result[i].coordsOverAroute == null) {
-	    						console.log("se cago");
+	    						console.log("no");
 	    					}else{	
 	    						console.log(passengerOriginCoords);
 	    						console.log(passengerDestinationCoords);
@@ -526,6 +527,8 @@ function installEvents() {
 	    				}, 15000);
 		    		}
 				});
+				
+				mui.busy(false);
 				return false;
 			}
 		}
