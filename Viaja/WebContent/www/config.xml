@@ -46,7 +46,8 @@
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-x-toast" />
 	<plugin name="ionic-plugin-keyboard" />
-	<plugin name="cordova-plugin-media" />
+	<plugin name="cordova-plugin-media"/>
+	<plugin name="cordova-plugin-geolocation" spec="2.4.3"/>
 	<plugin name="cordova-plugin-splashscreen" />
 	<preference name="ShowSplashScreenSpinner" value="true" /> <!-- ios: if set to false, the spinner won't appear on the splash screen 
 		during app loading -->

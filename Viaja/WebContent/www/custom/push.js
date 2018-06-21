@@ -1,11 +1,13 @@
-//var androidSenderID = "991349295611"; 
+var androidSenderID = "991349295611"; 
 /*
  * Método principal usado para registrar el manejador de PushNotifications.
  */
+var pushNotificationTokenId;
+
 function pushNotificationRegister() {
 	if (typeof PushNotification != "undefined") {
 		try {
-			/*var push = PushNotification.init({
+			var push = PushNotification.init({
 			    android: {
 			        senderID: androidSenderID
 			    },
@@ -15,13 +17,14 @@ function pushNotificationRegister() {
 			        sound: "true"
 			    },
 			    windows: {}
-			});*/
+			});
 			
 			//Pongo en cero el badge.
 			/*push.setApplicationIconBadgeNumber(function() {}, function() {}, 0);*/
 			
 			//Evento al registrarse el dispositivo. Envío el token al servidor.
 			push.on('registration', function(data) {
+				alert(data.registrationId);
 				sendTokenForPushNotification(data.registrationId);
 			});
 			
@@ -37,7 +40,7 @@ function pushNotificationRegister() {
 				push.setApplicationIconBadgeNumber(function() {}, function() {}, 0);
 				if ( data.message ) {
 					try {
-				    	mui.vibrate(50);
+				    	mui.vibrate();
 						window.plugins.toast.showLongCenter(data.message);
 					} catch (err) {
 						//alert("Error al recibir notificación: " + err.message);
@@ -50,7 +53,7 @@ function pushNotificationRegister() {
 			});
 				
 		} catch(err) {
-			//mui.alert("Catch: " + err.message, "Atención");
+			mui.alert("Catch: " + err.message, "Atención");
 		}
 	}
 } //fin function pushNotificationRegister(tokenHandler)
@@ -65,20 +68,22 @@ function sendTokenForPushNotification(tokenId) {
 	if (mui.connectionAvailable() && mui.cordovaAvailable()) {
 		$.ajax({
 			url: 'https://viaja-conmigo-servidor.herokuapp.com/users/registerPush',
+			type: 'GET',
 			crossDomain: true,
 			data: {
-				//tokenid: tokenId,
+				token: tokenId,
 				devicename:device.name,
 				deviceplatform:device.platform,
 				devicemodel: device.model,
 				deviceuuid: device.uuid,
 				deviceversion: device.version,
-				//lasttokenid: lastTokenId//,
+				//lasttokenid: lastTokenId
 				//username: userName
 			}
 		})
 		 .done(function(data) {
-			 //pushNotificationTokenId = tokenId;	//Establezco la variable global.
+			 pushNotificationTokenId = tokenId;	//Establezco la variable global.
+			 alert(pushNotificationTokenId);
 		 })
 		 .fail(function(err) {
 			 //mui.alert(err, "Atención");
@@ -90,13 +95,14 @@ function sendPushNotification() {
 	if (mui.connectionAvailable() && mui.cordovaAvailable()) {
 		$.ajax({
 			url: 'https://viaja-conmigo-servidor.herokuapp.com/users/sendPush',
+			type: 'GET',
 			crossDomain: true,
 			data: {
 				message: 'Hola Jime'
 			}
 		})
 		 .done(function(data) {
-			 //pushNotificationTokenId = tokenId;	//Establezco la variable global.
+			 pushNotificationTokenId = tokenId;	//Establezco la variable global.
 		 })
 		 .fail(function(err) {
 			 //mui.alert(err, "Atención");

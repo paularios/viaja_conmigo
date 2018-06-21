@@ -10,10 +10,9 @@ function deviceReady() {
 			else
 				mui.alert('We recommend you connect your device to the Internet');
 		}
-		mui.viewport.showPage('home-page', 'DEF');
+		//mui.viewport.showPage('home-page', 'DEF');
 		//Install events, clicks, resize, online/offline, etc. 
 		installEvents();
-		pushNotificationRegister();
 		//Hide splash.
 		//Ocultar el splash.
 		if (navigator.splashscreen) {
@@ -125,6 +124,7 @@ function installEvents() {
 		    				mui.vibrate();
 		    			}
 		    			else {
+		    				pushNotificationRegister();
 		    				document.getElementById('sign-up-alert').style.visibility = 'hidden';
 		    				mui.viewport.showPage('profile-page', 'DEF');
 		    			}
@@ -152,6 +152,7 @@ function installEvents() {
 		    				mui.vibrate();
 		    			}
 		    			else {
+		    				pushNotificationRegister();
 		    				document.getElementById('log-in-alert').style.visibility = 'hidden';
 		    				mui.viewport.showPage('home-page', 'DEF');
 		    			}
@@ -270,7 +271,7 @@ function installEvents() {
 				return false;
 			}
 		},
-		{
+/*		{
 			id: '.mui-headmenu',
 			ev: 'click',	//If not, it assumes click
 			fn: () => {
@@ -278,7 +279,7 @@ function installEvents() {
 				mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');
 				return false;
 			}
-		},
+		},*/
 		//MobileUI viewport specific event.
 		{
 			vp: mui.viewport,
@@ -343,10 +344,10 @@ function installEvents2() {
 	});
 	
 	//Open menu.
-	$('.mui-headmenu').click(function() {
+/*	$('.mui-headmenu').click(function() {
 		mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');	//ATTENTION!!! mui.screen instead of mui.viewport
 		return false;
-	});
+	});*/
 
 	$('#tabbar-button1').click(function() {
 		mui.alert('tab 1','Selected');
@@ -382,9 +383,9 @@ function installEvents2() {
 	/*******************************************************************************/	
 	//Swipe touch events. Cool for best App user experience!
 	//Evento de desplazamiento tactil. Buenisimo para una óptima experiencia de usuario en App!
-	mui.viewport.on('swiperight', function(currentPageId, originalTarget, event, startX, startY, endX, endY) {
+	/*mui.viewport.on('swiperight', function(currentPageId, originalTarget, event, startX, startY, endX, endY) {
 		if (!mui.viewport.panelIsOpen()) {
 			mui.history.back();
 		}
-	});
+	});*/
 }

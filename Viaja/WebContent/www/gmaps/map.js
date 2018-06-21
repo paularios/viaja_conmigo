@@ -10,6 +10,7 @@ var map;
 initMap = function () {
   navigator.geolocation.getCurrentPosition(
     function (position){
+    	alert('Mapa Callback');
       originCoords =  {
         lat: position.coords.latitude,
         lng: position.coords.longitude
