@@ -455,6 +455,8 @@ function installEvents() {
 				var bestJoinCoordsMarker;
 				var bestLeaveCoordsMarker;
 				var driver_email;
+				var driverOrigin;
+				var driverDestination;
 				mui.busy(true);
 				$.ajax({ 
 		    		type: 'GET', 
@@ -472,7 +474,15 @@ function installEvents() {
 	    						console.log(result[i].coordsOverAroute.lng);
     							latCoordsOverAroute = result[i].coordsOverAroute.lat;
 	    						lngCoordsOverAroute = result[i].coordsOverAroute.lng;
-	    						passengerJoinCoords(passengerOriginCoords, result[i].origin, result[i].destination, latCoordsOverAroute, lngCoordsOverAroute, function(joinCoords){
+	    						getLatLng(addressOrigin, function(origin){
+	    							console.log(origin);
+	    							driverOrigin = origin;
+	    						});
+	    						getLatLng(addressOrigin, function(destination){
+	    							console.log(destination);
+	    							driverDestination = destination;
+	    						});
+	    						passengerJoinCoords(passengerOriginCoords, driverOrigin, driverDestination, latCoordsOverAroute, lngCoordsOverAroute, function(joinCoords){
 	    							console.log(joinCoords);
 	    							joinLatCoords.push(joinCoords.lat); 
 	    							joinLngCoords.push(joinCoords.lng);
