@@ -31,55 +31,15 @@ initMap = function () {
     },function(error){console.log(error);});
 }
 
-/*function setMap(originCoords, map, gmap){
-	destinationMarker = new google.maps.Marker({
-		map: map,
-		draggable: true,
-        icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(originCoords.lat, originCoords.lng)
+function addMarker(coords, color) {
+	var marker;
+	marker = new google.maps.Marker({
+        map: map,
+        icon: "https://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png",
+        position: new google.maps.LatLng(originCoords.lat,originCoords.lng)
     });
-	destinationMarker.addListener('click', toggleBounce);
-	destinationMarker.addListener( 'dragend', function (event) {
-        destinationCoords = {
-          lat: this.getPosition().lat(),
-          lng: this.getPosition().lng()
-        }
-        defineRoute(originCoords, destinationCoords);
-        passengerOriginCoords = {
-        		lat: -34.901086,
-        		lng: -56.176461
-        }
-        coordsOverAroute = obtainMultipleCoordsOverAroute(originCoords, destinationCoords);
-        console.log(coordsOverAroute);
-        passengerOriginMarker = new google.maps.Marker({
-    		map: map,
-    		draggable: true,
-            icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            animation: google.maps.Animation.DROP,
-            position: new google.maps.LatLng(passengerOriginCoords.lat, passengerOriginCoords.lng)
-        });
-        passengerJoinCoords(passengerOriginCoords, originCoords, destinationCoords, gmap, function(passengerJoinCoords){
-        	console.log("Join coords");
-            console.log(passengerJoinCoords);
-            passengerJoinMarker = new google.maps.Marker({
-        		map: map,
-        		draggable: true,
-                icon: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                animation: google.maps.Animation.DROP,
-                position: new google.maps.LatLng(passengerJoinCoords.lat, passengerJoinCoords.lng)
-            });
-        });
-	});
+	return marker;
 }
-
-function toggleBounce() {
-	if (destinationMarker.getAnimation() !== null) {
-		destinationMarker.setAnimation(null);
-	} else {
-        destinationMarker.setAnimation(google.maps.Animation.BOUNCE);
-    }
-}*/
 
 function obtainLatLngFromAddress() {
 	var address = document.getElementById('destination').value;
@@ -98,6 +58,21 @@ function obtainLatLngFromAddress() {
 		        position: new google.maps.LatLng(destinationCoords.lat, destinationCoords.lng)
 		    });
 			defineRoute(originCoords, destinationCoords);
+		}
+	});
+}
+
+function getLatLng(address, callback){
+	var geocoder = new google.maps.Geocoder();
+	var coords = {};
+	geocoder.geocode({'address': address}, function(results, status){
+		if (status == 'OK'){
+			coords = {
+				lat: results[0].geometry.location.lat(),
+				lng: results[0].geometry.location.lng()
+			}
+			console.log(coords);
+			callback(coords);
 		}
 	});
 }
@@ -151,20 +126,17 @@ function obtainMultipleCoordsOverAroute(originCoords, destinationCoords) {
   	return coordsLatLng;
 }
 
-function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDestinationCoords, callback) {
-	coordsOverAroute = obtainMultipleCoordsOverAroute(driverOriginCoords, driverDestinationCoords);
+function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDestinationCoords, coordsLat, coordsLng, callback) {
 	var originDistance;
 	var shortestDistance;
   	var distances = [];
-	var coordsLat = [];
-	var coordsLng = [];
   	var index;
   	var joinCoords = {};
   	var joinCoordsLng;
   	var joinCoordsLat;
-	setTimeout(function(){
-		coordsLat = coordsOverAroute.lat
-    	coordsLng = coordsOverAroute.lng
+	//console.log(coordsLat);
+	//console.log(coordsLng);
+  	setTimeout(function(){
 		for (var i=0; i<coordsLat.length; i++) {
     		originDistance = mui.util.distanceLatLng(passengerOriginCoords.lat, passengerOriginCoords.lng, coordsLat[i], coordsLng[i], "kilometros");
         	distances.push(originDistance);
@@ -179,9 +151,6 @@ function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDe
     	//console.log(shortestDistance)
     	index = distances.indexOf(shortestDistance);
       	//console.log(index);
-      	//console.log(coordsLat);
-      	//console.log('jjjjj'+coordsLat[index]);
-		//console.log(coordsLat[parseInt(index)]);
   		joinCoordsLat = coordsLat[parseInt(index)];
   		//console.log(joinCoordsLat);
   		joinCoordsLng = coordsLng[parseInt(index)];
@@ -190,7 +159,6 @@ function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDe
             lat: joinCoordsLat,
             lng: joinCoordsLng
         }
-        //console.log(joinCoords);
       	callback(joinCoords);
 	}, 7000);
 }

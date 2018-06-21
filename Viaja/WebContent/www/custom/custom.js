@@ -365,6 +365,116 @@ function installEvents() {
 				});
 				return false;
 			}
+		}, 
+		{ 
+			id: '#ride-as-passenger',
+			ev: 'click',	
+			fn: () => {	
+				var passengerOriginCoords;
+				var passengerDestinationCoords;
+				var addressOrigin = document.getElementById("origin").value;
+				getLatLng(addressOrigin, function(passengerOrigin){
+					console.log(passengerOrigin);
+					passengerOriginCoords = passengerOrigin;
+				});
+				var addressDestination = document.getElementById("destination").value;
+				getLatLng(addressDestination, function(passengerDestination){
+					console.log(passengerDestination);
+					passengerDestinationCoords = passengerDestination;
+				});
+				var joinLatCoords = [];
+				var joinLngCoords = [];
+				var leaveLatCoords = [];
+				var leaveLngCoords = [];
+				var bestJoinCoords = {};
+				var bestLeaveCoords = {};
+				var destinationDistances = [];
+				var originDistances = [];
+				var shortestOriginDistance;
+				var shortestDestinationDistance;
+				var originIndex;
+				var originIndex;
+				var latCoordsOverAroute = [];
+				var lngCoordsOverAroute = [];
+				var joinCoords = [];
+				var leaveCoords = [];
+				var bestJoinCoordsMarker;
+				var bestLeaveCoordsMarker
+				mui.busy(true);
+				$.ajax({ 
+		    		type: 'GET', 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/rides/returnAllRides',
+		    		success: function (result) {
+		    			mui.busy(false);
+		    			console.log(result);
+	    				for (var i=0; i < result.length; i++) {
+	    					if (result[i].origin == null || result[i].destination == null || result[i].coordsOverAroute == null) {
+	    						console.log("se cago");
+	    					}else{	
+	    						console.log(passengerOriginCoords);
+	    						console.log(passengerDestinationCoords);
+	    						console.log(result[i].coordsOverAroute.lat);
+	    						console.log(result[i].coordsOverAroute.lng);
+    							latCoordsOverAroute = result[i].coordsOverAroute.lat;
+	    						lngCoordsOverAroute = result[i].coordsOverAroute.lng;
+	    						passengerJoinCoords(passengerOriginCoords, result[i].origin, result[i].destination, latCoordsOverAroute, lngCoordsOverAroute, function(joinCoords){
+	    							console.log(joinCoords);
+	    							joinLatCoords.push(joinCoords.lat);
+	    							joinLngCoords.push(joinCoords.lng);
+	    						});
+    							passengerJoinCoords(passengerDestinationCoords, result[i].origin, result[i].destination, latCoordsOverAroute, lngCoordsOverAroute, function(leaveCoords){
+    								 console.log(leaveCoords);
+    								 leaveLatCoords.push(leaveCoords.lat);
+    								 leaveLngCoords.push(leaveCoords.lng);
+    							 });		    				
+		    				}
+	    				}
+	    				// COMPARO LAS COORDENAS DE CADA VIAJE
+	    				setTimeout(function(){
+		    				for (var i=0; i < joinLatCoords.length; i++) {
+		    					originDistance = mui.util.distanceLatLng(passengerOriginCoords.lat, passengerOriginCoords.lng, joinLatCoords[i], joinLngCoords[i], "kilometros");
+		    					originDistances.push(originDistance);
+		    				}
+		    				console.log(originDistances);
+		    				for (var i=0; i < leaveLatCoords.length; i++) {
+		    					destinationDistance = mui.util.distanceLatLng(passengerDestinationCoords.lat, passengerDestinationCoords.lng, leaveLatCoords[i], leaveLngCoords[i], "kilometros");
+		    					destinationDistances.push(destinationDistance);
+		    				}
+		    				console.log(destinationDistances);
+		    				shortestOriginDistance = destinationDistances[0];
+		    				for (var i=0; i < originDistances.length; i++) {
+		    		    		if (originDistances[i] < shortestOriginDistance) {
+		    		    			shortestOriginDistance = originDistances[i];
+		    		    		}
+		    		    	}
+		    				console.log(shortestOriginDistance);
+		    				shortestDestinationDistance = destinationDistances[0];
+		    				for (var i=0; i < destinationDistances.length; i++) {
+		    		    		if (destinationDistances[i] < shortestDestinationDistance) {
+		    		    			shortestDestinationDistance = destinationDistances[i];
+		    		    		}
+		    		    	}
+		    				console.log(shortestDestinationDistance);
+		    				originIndex = originDistances.indexOf(shortestOriginDistance);
+		    				destinationIndex = destinationDistances.indexOf(shortestDestinationDistance);
+		    				bestJoinCoords = {
+		    					lat: joinLatCoords[originIndex],
+		    					lng: joinLngCoords[originIndex]
+		    				}
+		    				console.log(bestJoinCoords);
+		    				bestLeaveCoords = {
+			    				lat: leaveLatCoords[destinationIndex],
+			    				lng: leaveLngCoords[destinationIndex]
+			    			}
+		    				console.log(bestLeaveCoords);
+		    				console.log("fin");
+		    				bestJoinCoordsMarker = addMarker(bestJoinCoords, "green");
+		    				bestLeaveCoordsMarker = addMarker(bestLeaveCoordsMarker, "blue");
+	    				}, 15000);
+		    		}
+				});
+				return false;
+			}
 		}
 	]);
 
