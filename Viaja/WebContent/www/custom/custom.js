@@ -453,7 +453,8 @@ function installEvents() {
 				var joinCoords = [];
 				var leaveCoords = [];
 				var bestJoinCoordsMarker;
-				var bestLeaveCoordsMarker
+				var bestLeaveCoordsMarker;
+				var driver_email;
 				mui.busy(true);
 				$.ajax({ 
 		    		type: 'GET', 
@@ -473,14 +474,11 @@ function installEvents() {
 	    						lngCoordsOverAroute = result[i].coordsOverAroute.lng;
 	    						passengerJoinCoords(passengerOriginCoords, result[i].origin, result[i].destination, latCoordsOverAroute, lngCoordsOverAroute, function(joinCoords){
 	    							console.log(joinCoords);
-	    							joinLatCoords.push(joinCoords.lat);
+	    							joinLatCoords.push(joinCoords.lat); 
 	    							joinLngCoords.push(joinCoords.lng);
 	    						});
-    							passengerJoinCoords(passengerDestinationCoords, result[i].origin, result[i].destination, latCoordsOverAroute, lngCoordsOverAroute, function(leaveCoords){
-    								 console.log(leaveCoords);
-    								 leaveLatCoords.push(leaveCoords.lat);
-    								 leaveLngCoords.push(leaveCoords.lng);
-    							 });		    				
+	    						console.log(joinLatCoords);
+	    						console.log(joinLngCoords);
 		    				}
 	    				}
 	    				// COMPARO LAS COORDENAS DE CADA VIAJE
@@ -490,44 +488,27 @@ function installEvents() {
 		    					originDistances.push(originDistance);
 		    				}
 		    				console.log(originDistances);
-		    				for (var i=0; i < leaveLatCoords.length; i++) {
-		    					destinationDistance = mui.util.distanceLatLng(passengerDestinationCoords.lat, passengerDestinationCoords.lng, leaveLatCoords[i], leaveLngCoords[i], "kilometros");
-		    					destinationDistances.push(destinationDistance);
-		    				}
-		    				console.log(destinationDistances);
-		    				shortestOriginDistance = destinationDistances[0];
+		    				shortestOriginDistance = originDistances[0];
 		    				for (var i=0; i < originDistances.length; i++) {
 		    		    		if (originDistances[i] < shortestOriginDistance) {
 		    		    			shortestOriginDistance = originDistances[i];
 		    		    		}
 		    		    	}
 		    				console.log(shortestOriginDistance);
-		    				shortestDestinationDistance = destinationDistances[0];
-		    				for (var i=0; i < destinationDistances.length; i++) {
-		    		    		if (destinationDistances[i] < shortestDestinationDistance) {
-		    		    			shortestDestinationDistance = destinationDistances[i];
-		    		    		}
-		    		    	}
-		    				console.log(shortestDestinationDistance);
 		    				originIndex = originDistances.indexOf(shortestOriginDistance);
-		    				destinationIndex = destinationDistances.indexOf(shortestDestinationDistance);
 		    				bestJoinCoords = {
 		    					lat: joinLatCoords[originIndex],
 		    					lng: joinLngCoords[originIndex]
 		    				}
 		    				console.log(bestJoinCoords);
-		    				bestLeaveCoords = {
-			    				lat: leaveLatCoords[destinationIndex],
-			    				lng: leaveLngCoords[destinationIndex]
-			    			}
-		    				console.log(bestLeaveCoords);
+		    				console.log(originIndex);
+		    				driver_email = result[originIndex].driverMail;
+		    				console.log(driver_email);
 		    				console.log("fin");
 		    				bestJoinCoordsMarker = addMarker(bestJoinCoords, "green");
-		    				bestLeaveCoordsMarker = addMarker(bestLeaveCoordsMarker, "blue");
-	    				}, 15000);
+	    				}, 16000);
 		    		}
 				});
-				
 				mui.busy(false);
 				return false;
 			}
