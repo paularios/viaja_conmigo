@@ -180,9 +180,7 @@ function installEvents() {
 		    			if(result === 'eliminatedSession'){
 		    				mui.screen.closePanel('profile-panel', 'SLIDE_LEFT');
 		    				mui.viewport.showPage('init-page', 'DEF');
-		    				for(i = 0; i < mui.history.elements.length; i++){
-		    					mui.history.elements.pop();
-		    				}
+		    				mui.history = null;
 		    			}else{
 		    				alert('Ya no está logueado!');	
 		    			}
