@@ -268,7 +268,6 @@ function installEvents() {
 					mui.alert('tab 1','Selected');
 				} else {
 					mui.screen.showPanel('ride-panel', 'FLOAT_DOWN');
-					removeCoverShield();
 				}
 				
 				return false;
@@ -279,7 +278,6 @@ function installEvents() {
 			ev: 'click',
 			fn: () => {
 				mui.screen.showPanel('profile-panel', 'FLOAT_RIGHT');
-				removeCoverShield();
 				return false;
 			}
 		},
