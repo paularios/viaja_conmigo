@@ -159,10 +159,10 @@
 					<div class="mui-panel-body">
 						<span>Elige tu rol:</span>
 						<br>
-						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor" onclick="showDriverForm()">
+						<input type="button" id="ride-as-driver"  class="ride-btn" value="Conductor">
 						<input type="button" id="ride-as-passenger"  class="ride-btn" value="Pasajero">
 						<div id="driver-div"> 
-							<form style="display:none;" id="driver-form">
+							<form id="driver-form">
 								<label for="exit-time">Hora de salida:</label>
 								<input type="time" id="exit-time" name="exit-time" size="15"><br>
 								<label for="passengers">Cant pasajeros:</label> 
@@ -197,6 +197,9 @@
 							<label for="nombre">Apellido:</label>
 							<input type="text" size="20" maxlength="50" name="user-profile-lastname" id="user-profile-lastname"  class="field-form" readonly="readonly">
 							<a id="user-edit-profile">Modificar perfil</a>
+							<br>
+							<br>
+							<a id="log-out-btn">Cerrar Sesión</a>
 						</div> 
 					</div>
 				</div>

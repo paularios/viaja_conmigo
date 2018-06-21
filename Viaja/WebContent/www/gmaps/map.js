@@ -195,7 +195,3 @@ function passengerJoinCoords(passengerOriginCoords, driverOriginCoords, driverDe
       	callback(joinCoords);
 	}, 7000);
 }
-
-function showDriverForm() {
-	document.getElementById("driver-form").style.display = "block";
-}

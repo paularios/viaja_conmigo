@@ -13,7 +13,7 @@ function deviceReady() {
 				mui.alert('We recommend you connect your device to the Internet');
 		}
 		//mui.viewport.showPage('home-page', 'DEF');
-		//Install events, clicks, resize, online/offline, etc. 
+		//Install events, clicks, resize, online/offline, etc.
 		installEvents();
 		//Hide splash.
 		//Ocultar el splash.
@@ -127,6 +127,7 @@ function installEvents() {
 		    			}
 		    			else {
 		    				pushNotificationRegister();
+		    				doIHaveData();
 		    				document.getElementById('sign-up-alert').style.visibility = 'hidden';
 		    				mui.viewport.showPage('profile-page', 'DEF');
 		    			}
@@ -155,8 +156,35 @@ function installEvents() {
 		    			}
 		    			else {
 		    				pushNotificationRegister();
+		    				doIHaveData();
 		    				document.getElementById('log-in-alert').style.visibility = 'hidden';
 		    				mui.viewport.showPage('home-page', 'DEF');
+		    			}
+		    		}
+		    	});
+				return false;
+			}
+		},
+		{
+			id: '#log-out-btn',
+			ev: 'click',	
+			fn: () => {
+				var email = $('#log-in-mail').val();
+				var password = $('#log-in-password').val();
+				mui.busy(true);
+				$.ajax({ 
+		    		type: 'GET', 
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/logOut',
+		    		success: function (result) {
+		    			mui.busy(false);
+		    			if(result === 'eliminatedSession'){
+		    				mui.screen.closePanel('profile-panel', 'SLIDE_LEFT');
+		    				mui.viewport.showPage('init-page', 'DEF');
+		    				for(i = 0; i < mui.history.elements.length; i++){
+		    					mui.history.elements.pop();
+		    				}
+		    			}else{
+		    				alert('Ya no está logueado!');	
 		    			}
 		    		}
 		    	});
@@ -207,7 +235,6 @@ function installEvents() {
 			    				mui.vibrate();
 			    			}
 			    			else if (result === 'updated') {
-			    				
 			    				document.getElementById('profile-alert').style.visibility = 'hidden';
 			    				mui.viewport.showPage('home-page', 'DEF');
 			    			}
@@ -242,8 +269,8 @@ function installEvents() {
 				if ($('#destination').val() == null) {
 					mui.alert('tab 1','Selected');
 				} else {
-					sendPushNotification();
 					mui.screen.showPanel('ride-panel', 'FLOAT_DOWN');
+					removeCoverShield();
 				}
 				
 				return false;
@@ -254,6 +281,7 @@ function installEvents() {
 			ev: 'click',
 			fn: () => {
 				mui.screen.showPanel('profile-panel', 'FLOAT_RIGHT');
+				removeCoverShield();
 				return false;
 			}
 		},
@@ -281,7 +309,7 @@ function installEvents() {
 				mui.screen.showPanel('menu-panel', 'SLIDE_LEFT');
 				return false;
 			}
-		},*/
+		},
 		//MobileUI viewport specific event.
 		{
 			vp: mui.viewport,
@@ -291,7 +319,7 @@ function installEvents() {
 					mui.history.back();
 				}
 			}
-		},
+		},*/
 		{
 			vp: mui.viewport,
 			ev: 'swipedowndiscover',
@@ -327,6 +355,22 @@ function installEvents() {
 				//Do something if you need
 			}
 		},
+		{
+			id: '#ride-as-driver',
+			ev: 'click',
+			fn: () => {
+				document.getElementById("driver-div").style.display = "block";
+				document.getElementById("passenger-div").style.display = "none";
+			}
+		},
+		{
+			id: '#ride-as-passenger',
+			ev: 'click',
+			fn: () => {
+				document.getElementById("passenger-div").style.display = "block";
+				document.getElementById("driver-div").style.display = "none";
+			}
+		},
 		{ // ACA NO HAY CONTROLES TODAVIA
 			id: '#create-ride-btn',
 			ev: 'click',	
@@ -337,7 +381,7 @@ function installEvents() {
 				var carBrand = $('#car-brand').val();
 				var driverOrigin = $('#origin').val();
 				var driverDestination = $('#destination').val();
-				/*setTimeOut(function(){
+				/*setTimeout(function(){
 					coordsOverAroute = obtainMultipleCoordsOverAroute(driver_origin, driver_destination);
 				}, 7000);*/
 				console.log(exitTime);
@@ -349,27 +393,26 @@ function installEvents() {
 				//console.log(coordsOverAroute);
 				mui.busy(true);
 				$.ajax({ 
-		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/createRide',
+		    		url: 'https://viaja-conmigo-servidor.herokuapp.com/rides/createRide',
 		    		type: 'GET',
 		    		crossDomain: true,
 		    		data: {
-		    			driverOrigin: 'origen',
-		    			driverDestination: 'destino',
-		    			carRegistration: carRegistration.toString(),
+		    			driverOrigin: driverOrigin,
+		    			driverDestination: driverDestination,
+		    			carRegistration: carRegistration,
 		    			carBrand: carBrand,
 		    			numberOfPassengers: numberOfPassengers,
-		    			exitTime: 'hora'
-		    			/*+'&coordsOverAroute='+coordsOverAroute,*/
+		    			exitTime: exitTime
+		    			//coordsOverAroute = coordsOverAroute
 		    		},
 		    		success: function (result) {
 		    			mui.busy(false);
-		    			if(result === 'unAuthorized'){
-		    				mui.alert("Error. No se pudo crear el viaje.");
+		    			 if (result === 'ok') {
+		    				mui.screen.closePanel('ride-panel', 'SLIDE_UP');	//ATENTION!!! mui.screen instead mui.viewport
+			    			mui.alert("Viaje creado correctamente.");   			
+			    		} else {
+		    				mui.alert("Error. "+result);
 		    				mui.vibrate();
-		    			}
-		    			else if (result === 'updated') {
-		    				mui.alert("Viaje creado correctamente.");
-		    				mui.viewPort.closePanel();    			
 		    			}
 		    		}
 				});
@@ -439,4 +482,20 @@ function installEvents2() {
 			mui.history.back();
 		}
 	});*/
+}
+
+function doIHaveData(){
+	$.ajax({ 
+		type: 'GET', 
+		url: 'https://viaja-conmigo-servidor.herokuapp.com/users/getUserData',
+		success: function (result){
+			console.log(result);
+			if(result != null){
+				document.getElementById('profile-name').value = result[0];
+				document.getElementById('profile-lastname').value = result[1];
+				document.getElementById('user-profile-name').value = result[0];
+				document.getElementById('user-profile-lastname').value = result[1];				
+			}
+		}
+	});
 }

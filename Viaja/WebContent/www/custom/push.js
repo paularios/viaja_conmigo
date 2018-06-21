@@ -24,7 +24,7 @@ function pushNotificationRegister() {
 			
 			//Evento al registrarse el dispositivo. Envío el token al servidor.
 			push.on('registration', function(data) {
-				alert(data.registrationId);
+				//alert(data.registrationId);
 				sendTokenForPushNotification(data.registrationId);
 			});
 			
